@@ -1,0 +1,12 @@
+[api]
+    port = "8080"
+    profile = "dev"
+[db]
+    driverName = "mysql"
+    host = "localhost"
+    port = "5433"
+    user = "admin"
+    password = "7890123"
+    name = "api_ddd_1"
+    readTimeout = "30s"
+    writeTimeout = "30s"
