@@ -1,7 +1,8 @@
-package configs
+package server
 
 import (
-	routes2 "ddd-base/cmd/server/routes"
+	"OliveiraJardelBkend3Final/internal/configs"
+	"OliveiraJardelBkend3Final/internal/routes"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -14,13 +15,13 @@ type Server struct {
 }
 
 func (s *Server) Run() {
-	router := routes2.ConfigRoutes(s.server)
-	log.Println("server is runnig at port:", s.port)
+	router := routes.ConfigRoutes(s.server)
+	log.Println("servidor rodando na porta:", s.port)
 	log.Fatalln(router.Run(":" + s.port))
 }
 
 func NewServer() Server {
-	severPort := GetServerPort()
+	severPort := configs.GetServerPort()
 	return Server{
 		severPort,
 		gin.Default(),

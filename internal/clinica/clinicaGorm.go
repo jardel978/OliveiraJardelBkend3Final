@@ -11,7 +11,7 @@ type clinicaGorm struct {
 	db *gorm.DB
 }
 
-func newClinicaGorm() IClinicaRepository {
+func NewClinicaGorm() IClinicaRepository {
 	return &clinicaGorm{
 		db: configs.GetGormDB(),
 	}
@@ -26,7 +26,8 @@ func (cg *clinicaGorm) Save(clinica domain.Clinica, ctx context.Context) (c doma
 }
 
 func (cg *clinicaGorm) FindAll(ctx context.Context) (list []domain.Clinica, err error) {
-	err = cg.db.WithContext(ctx).Table("clinica").Find(&list).Error
+	//err = cg.db.WithContext(ctx).Model(&domain.Clinica{}).Find(&list).Error
+	err = cg.db.Model(&domain.Clinica{}).Find(&list).Error
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +35,7 @@ func (cg *clinicaGorm) FindAll(ctx context.Context) (list []domain.Clinica, err 
 }
 
 func (cg *clinicaGorm) FindById(id uint, ctx context.Context) (c domain.Clinica, err error) {
-	err = cg.db.WithContext(ctx).Table("clinica").First(&c, id).Error
+	err = cg.db.WithContext(ctx).Model(&domain.Clinica{}).First(&c, id).Error
 	if err != nil {
 		return c, err
 	}

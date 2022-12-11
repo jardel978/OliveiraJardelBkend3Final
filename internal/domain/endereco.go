@@ -1,7 +1,5 @@
 package domain
 
-import "gorm.io/gorm"
-
 type Estado int
 
 const (
@@ -72,24 +70,27 @@ func (e Estado) IndexEnum() int {
 }
 
 type Bairro struct {
-	gorm.Model
-	Nome      string     `gorm:"column:nome"`
-	Enderecos []Endereco `gorm:"column:enderecos"`
+	ID        uint
+	Nome      string `gorm:"column:nome"`
+	Enderecos []Endereco
 }
 
 type Cidade struct {
-	gorm.Model
-	Nome      string     `gorm:"column:nome"`
-	Estado    Estado     `gorm:"column:estado"`
-	Enderecos []Endereco `gorm:"column:enderecos"`
+	ID        uint
+	Nome      string `gorm:"column:nome"`
+	Estado    Estado `gorm:"column:estado"`
+	Enderecos []Endereco
 }
 
 type Endereco struct {
-	gorm.Model
+	ID          uint
 	Logradouro  string `gorm:"column:logradouro;size=60;not null"`
 	Numero      string `gorm:"column:numero;size=7;not null"`
-	BairroID    uint   `gorm:"column:bairro_id;not null"`
 	CEP         string `gorm:"column:cep;size=8;not null"`
-	CidadeID    uint   `gorm:"column:cidade_id;not null"`
 	Complemento string `gorm:"column:complemento;size=250"`
+	ClinicaID   uint
+	DentistaID  uint
+	PacienteID  uint
+	BairroID    uint `gorm:"not null"`
+	CidadeID    uint `gorm:"not null"`
 }

@@ -7,11 +7,14 @@ import (
 )
 
 type PacienteRequestBody struct {
-	Nome              string    `json:"nome" binding:"required"`
-	Sobrenome         string    `json:"sobrenome" binding:"required"`
-	DataNascimento    time.Time `json:"data_nascimento"  binding:"required"`
-	domain.Endereco   `json:"endereco"`
-	domain.Prontuario `json:"prontuario"`
+	Nome           string    `json:"nome" binding:"required"`
+	Sobrenome      string    `json:"sobrenome" binding:"required"`
+	DataNascimento time.Time `json:"data_nascimento"  binding:"required"`
+	RG             string    `json:"rg" binding:"required"`
+	EnderecoID     uint      `json:"endereco_id"`
+	ProntuarioID   uint      `json:"prontuario_id"`
+	//domain.Endereco   `json:"endereco"`
+	//domain.Prontuario `json:"prontuario"`
 	//DataCadastro   time.Time `json:"data_cadastro"`
 }
 
@@ -23,6 +26,7 @@ type PacienteResponseBody struct {
 	Nome              string         `json:"nome"`
 	Sobrenome         string         `json:"sobrenome"`
 	NomeCompleto      string         `json:"nome_completo"`
+	RG                string         `json:"rg"`
 	DataNascimento    time.Time      `json:"data_nascimento"`
 	domain.Endereco   `json:"endereco"`
 	domain.Prontuario `json:"prontuario"`

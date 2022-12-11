@@ -7,11 +7,13 @@ import (
 )
 
 type DentistaRequestBody struct {
-	Nome            string `json:"nome" binding:"required"`
-	Sobrenome       string `json:"sobrenome" binding:"required"`
-	domain.Endereco `json:"endereco"`
-	Matricula       string            `json:"matricula" binding:"required"`
-	Consultas       []domain.Consulta `json:"consultas"`
+	Nome      string `json:"nome" binding:"required"`
+	Sobrenome string `json:"sobrenome" binding:"required"`
+	//domain.Endereco `json:"endereco"`
+	EnderecoID uint              `json:"endereco_id"`
+	Matricula  string            `json:"matricula" binding:"required"`
+	Consultas  []domain.Consulta `json:"consultas"`
+	ClinicaID  uint              `json:"clinica_id" binding:"required"`
 }
 
 type DentistaResponseBody struct {
@@ -25,4 +27,5 @@ type DentistaResponseBody struct {
 	domain.Endereco `json:"endereco"`
 	Matricula       string            `json:"matricula"`
 	Consultas       []domain.Consulta `json:"consultas"`
+	Clinicas        []domain.Clinica  `json:"clinicas"`
 }

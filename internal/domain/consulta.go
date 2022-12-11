@@ -7,8 +7,8 @@ import (
 
 type Consulta struct {
 	gorm.Model
-	PacienteID uint      `gorm:"column:paciente_id;not null"`
-	DentistaID uint      `gorm:"column:dentista_id;not null"`
+	PacienteID uint      `gorm:"not null"`
+	DentistaID uint      `gorm:"not null"`
 	Data       time.Time `gorm:"column:data;not null"`
 	Horario    time.Time `gorm:"column:horario;not null"`
 	Descricao  string    `gorm:"column:descricao;size=250"`

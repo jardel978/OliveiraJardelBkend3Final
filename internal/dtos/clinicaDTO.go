@@ -7,10 +7,11 @@ import (
 )
 
 type ClinicaRequestBody struct {
-	Nome            string `json:"nome" binding:"required"`
-	CNPJ            string `json:"cnpj" binding:"required"`
-	domain.Endereco `json:"endereco"`
-	Dentistas       []domain.Dentista `json:"dentistas"`
+	Nome string `json:"nome" binding:"required"`
+	CNPJ string `json:"cnpj" binding:"required"`
+	//domain.Endereco `json:"endereco"`
+	EnderecoID uint              `json:"endereco_id"`
+	Dentistas  []domain.Dentista `json:"dentistas"`
 }
 
 type ClinicaResponseBody struct {

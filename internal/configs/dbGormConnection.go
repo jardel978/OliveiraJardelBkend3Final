@@ -1,7 +1,7 @@
 package configs
 
 import (
-	_ "github.com/go-sql-driver/mysql"
+	"OliveiraJardelBkend3Final/internal/migrations"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
@@ -20,6 +20,12 @@ func StartGormDb() {
 	config.SetMaxIdleConns(10)
 	config.SetMaxOpenConns(100)
 	config.SetConnMaxLifetime(time.Hour)
+
+	err = migrations.RunMigrations(cnn)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	gormDb = cnn
 }
 

@@ -25,15 +25,16 @@ type DBConfig struct {
 }
 
 func (c *DBConfig) getURI() string {
+	var URI string
 	switch c.DriverName {
 	case "mysql":
-		return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4,utf8\u0026readTimeout=%s\u0026writeTimeout=%s&parseTime=true",
+		URI = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4,utf8\u0026readTimeout=%s\u0026writeTimeout=%s&parseTime=true",
 			c.User, c.pass, c.Host, c.Port, c.DataBase, c.ReadTimeout, c.WriteTimeout)
 	case "postgres":
-		return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		URI = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 			c.Host, c.Port, c.User, c.pass, c.DataBase)
 	}
-	return ""
+	return URI
 }
 
 type config struct {
@@ -65,7 +66,7 @@ func Load() {
 
 	cfg.API = APIConfig{
 		Port:    viper.GetString("api.port"),
-		Profile: viper.GetString("db.profile"),
+		Profile: viper.GetString("api.profile"),
 	}
 	cfg.DB = DBConfig{
 		DriverName:   viper.GetString("db.driverName"),
@@ -81,7 +82,4 @@ func Load() {
 
 func GetServerPort() string {
 	return cfg.API.Port
-}
-func getDBConfig() DBConfig {
-	return cfg.DB
 }

@@ -18,7 +18,7 @@ type repository struct {
 }
 
 func NewClinicaRepository() Repository {
-	return &repository{new(clinicaGorm)}
+	return &repository{repo: NewClinicaGorm()}
 }
 
 func (r *repository) Save(clinica domain.Clinica, ctx context.Context) (domain.Clinica, error) {

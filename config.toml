@@ -4,9 +4,9 @@
 [db]
     driverName = "mysql"
     host = "localhost"
-    port = "5433"
-    user = "admin"
+    port = "3306"
+    user = "root"
     password = "7890123"
-    name = "api_ddd_1"
+    name = "db_med_odonto"
     readTimeout = "30s"
     writeTimeout = "30s"

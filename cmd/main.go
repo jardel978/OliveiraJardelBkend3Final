@@ -1,13 +1,14 @@
 package main
 
 import (
+	"OliveiraJardelBkend3Final/cmd/server"
 	"OliveiraJardelBkend3Final/internal/configs"
 )
 
 func main() {
 	configs.Load()
 	configs.StartGormDb()
-	server := configs.NewServer()
+	server := server.NewServer()
 
 	server.Run()
 }
