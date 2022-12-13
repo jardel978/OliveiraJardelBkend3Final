@@ -103,7 +103,7 @@ func (ph *pacienteHandler) DeletarPaciente(ctx *gin.Context) {
 	err = ph.s.Delete(uint(idNum), ctx)
 	if err != nil {
 		codeValue := 400
-		if strings.Contains("não encontrada", err.Error()) {
+		if strings.Contains("não encontrado", err.Error()) {
 			codeValue = 404
 		}
 		web.Failure(ctx, codeValue, err)

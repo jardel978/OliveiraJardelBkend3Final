@@ -30,7 +30,27 @@ func (ph *consultaHandler) SalvarConsulta(ctx *gin.Context) {
 		return
 	}
 	resp, err := ph.s.Save(dto, ctx)
+	if err != nil {
+		web.Failure(ctx, 400, err)
+		return
+	}
+	web.Success(ctx, 201, resp)
+}
+
+func (ph *consultaHandler) SalvarConsultaComPacienteRgDentistaMatricula(ctx *gin.Context) {
+	var dto dtos.ConsultaRequestBody
+	errDtoJSON := ctx.ShouldBindJSON(&dto)
 	if errDtoJSON != nil {
+		web.Failure(ctx, 400, &errs.ErrRequestBody{
+			Err: errDtoJSON,
+		})
+		return
+	}
+	pacienteRg := ctx.Query("paciente-rg")
+	dentistaMatricula := ctx.Query("dentista-matricula")
+
+	resp, err := ph.s.SaveWithPacienteRgDentistaMatricula(pacienteRg, dentistaMatricula, dto, ctx)
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}
@@ -64,6 +84,17 @@ func (ph *consultaHandler) BuscarConsultaPorId(ctx *gin.Context) {
 	web.Success(ctx, 200, dto)
 }
 
+func (ph *consultaHandler) BuscarConsultaPorPacienteRG(ctx *gin.Context) {
+	pacienteRG := ctx.Param("rg")
+
+	dto, err := ph.s.FindAllByRgPaciente(pacienteRG, ctx)
+	if err != nil {
+		web.Failure(ctx, 404, err)
+		return
+	}
+	web.Success(ctx, 200, dto)
+}
+
 func (ph *consultaHandler) AtualizarConsulta(ctx *gin.Context) {
 	var dto dtos.ConsultaRequestBody
 	id := ctx.Param("id")
@@ -83,7 +114,7 @@ func (ph *consultaHandler) AtualizarConsulta(ctx *gin.Context) {
 		return
 	}
 	resp, err := ph.s.Update(uint(idNum), dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}

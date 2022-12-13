@@ -27,7 +27,7 @@ func (pg *dentistaGorm) Save(dentista domain.Dentista, ctx context.Context) (p d
 }
 
 func (pg *dentistaGorm) FindAll(ctx context.Context) (list []domain.Dentista, err error) {
-	err = pg.db.WithContext(ctx).Model(&domain.Dentista{}).Preload("Endereco").Preload("Prontuario").Find(&list).Error
+	err = pg.db.WithContext(ctx).Model(&domain.Dentista{}).Find(&list).Error
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (pg *dentistaGorm) FindAll(ctx context.Context) (list []domain.Dentista, er
 }
 
 func (pg *dentistaGorm) FindByMatricula(matricula string, ctx context.Context) (p domain.Dentista, err error) {
-	err = pg.db.WithContext(ctx).Model(&p).Where("Matricula", matricula).First(&p).Error
+	err = pg.db.WithContext(ctx).Model(&p).Where("Matricula", "matricula = ?", matricula).First(&p).Error
 	if err != nil {
 		return p, err
 	}
@@ -43,7 +43,7 @@ func (pg *dentistaGorm) FindByMatricula(matricula string, ctx context.Context) (
 }
 
 func (pg *dentistaGorm) FindById(id uint, ctx context.Context) (p domain.Dentista, err error) {
-	err = pg.db.WithContext(ctx).Model(&p).Preload("Endereco").Preload("Prontuario").First(&p, "id = ?", id).Error
+	err = pg.db.WithContext(ctx).Model(&p).First(&p, "id = ?", id).Error
 	if err != nil {
 		return p, err
 	}
