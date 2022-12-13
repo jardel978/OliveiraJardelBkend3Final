@@ -1,9 +1,11 @@
 package consulta
 
 import (
+	"OliveiraJardelBkend3Final/internal/dentista"
 	"OliveiraJardelBkend3Final/internal/domain"
 	"OliveiraJardelBkend3Final/internal/dtos"
 	"OliveiraJardelBkend3Final/internal/errs"
+	"OliveiraJardelBkend3Final/internal/paciente"
 	"context"
 	"fmt"
 	"github.com/dranikpg/dto-mapper"
@@ -11,20 +13,25 @@ import (
 )
 
 type CService interface {
-	Save(consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (resp dtos.ConsultaResponseBody, err error)
-	FindAll(ctx context.Context) (resp []dtos.ConsultaResponseBody, err error)
-	FindById(id uint, ctx context.Context) (resp dtos.ConsultaResponseBody, err error)
-	Update(id uint, consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (resp dtos.ConsultaResponseBody, err error)
+	Save(consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (dtos.ConsultaResponseBody, error)
+	SaveWithPacienteRgDentistaMatricula(pacienteRg string, dentistaMatricula string, consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (dtos.ConsultaResponseBody, error)
+	FindAll(ctx context.Context) ([]dtos.ConsultaResponseBody, error)
+	FindById(id uint, ctx context.Context) (dtos.ConsultaResponseBody, error)
+	FindAllByRgPaciente(pacienteRg string, ctx context.Context) ([]dtos.ConsultaResponseBody, error)
+	Update(id uint, consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (dtos.ConsultaResponseBody, error)
 	Delete(id uint, ctx context.Context) error
 }
 
 type service struct {
-	r CRepository
+	r  CRepository
+	dr dentista.DRepository
+	pr paciente.PRepository
 }
 
 func NewConsultaService() CService {
 	return &service{
-		r: NewConsultaRepository(),
+		r:  NewConsultaRepository(),
+		dr: dentista.NewDentistaRepository(),
 	}
 }
 
@@ -45,6 +52,36 @@ func (s *service) Save(consultaDTO dtos.ConsultaRequestBody, ctx context.Context
 	}
 
 	return resp, nil
+}
+
+func (s *service) SaveWithPacienteRgDentistaMatricula(pacienteRg string, dentistaMatricula string, consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (resp dtos.ConsultaResponseBody, err error) {
+	var paciente domain.Paciente
+	var dentista domain.Dentista
+
+	paciente, err = s.pr.FindByRG(pacienteRg, ctx)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			err = &errs.ErrRecordNotFound{
+				Message: fmt.Sprintf("falha ao buscar paciente: paciente de rg:%v não encontrado.", pacienteRg),
+			}
+		}
+		return resp, err
+	}
+
+	dentista, err = s.dr.FindByMatricula(dentistaMatricula, ctx)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			err = &errs.ErrRecordNotFound{
+				Message: fmt.Sprintf("falha ao buscar dentista: dentista de matrícula:%v não encontrado.", dentistaMatricula),
+			}
+		}
+		return resp, err
+	}
+
+	consultaDTO.PacienteID = paciente.ID
+	consultaDTO.DentistaID = dentista.ID
+
+	return s.Save(consultaDTO, ctx)
 }
 
 func (s *service) FindAll(ctx context.Context) (resp []dtos.ConsultaResponseBody, err error) {
@@ -78,7 +115,7 @@ func (s *service) FindById(id uint, ctx context.Context) (resp dtos.ConsultaResp
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			err = &errs.ErrRecordNotFound{
-				Message: fmt.Sprintf("falha ao buscar consulta: consulta de id:%v não encontrado.", id),
+				Message: fmt.Sprintf("falha ao buscar consulta: consulta de id:%v não encontrada.", id),
 			}
 		}
 		return resp, err
@@ -91,6 +128,44 @@ func (s *service) FindById(id uint, ctx context.Context) (resp dtos.ConsultaResp
 
 	return resp, nil
 }
+
+func (s *service) FindAllByRgPaciente(pacienteRg string, ctx context.Context) (resp []dtos.ConsultaResponseBody, err error) {
+	var paciente domain.Paciente
+	var list []domain.Consulta
+
+	paciente, err = s.pr.FindByRG(pacienteRg, ctx)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			err = &errs.ErrRecordNotFound{
+				Message: fmt.Sprintf("falha ao buscar paciente: paciente de rg:%v não encontrado.", pacienteRg),
+			}
+		}
+		return resp, err
+	}
+
+	list, err = s.r.FindAllByPacienteID(paciente.ID, ctx)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			err = &errs.ErrRecordNotFound{
+				Message: "falha ao buscar consultas: registros não encontrados.",
+			}
+		}
+		return resp, err
+	}
+
+	if len(list) > 0 {
+		for _, consulta := range list {
+			consultaDTO, errConvert := entityToDTO(consulta)
+			if errConvert != nil {
+				return resp, errConvert
+			}
+			resp = append(resp, consultaDTO)
+		}
+	}
+
+	return resp, nil
+}
+
 func (s *service) Update(id uint, consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (resp dtos.ConsultaResponseBody, err error) {
 	consulta, errConvert := dtoToEntity(consultaDTO)
 	if errConvert != nil {
@@ -98,6 +173,7 @@ func (s *service) Update(id uint, consultaDTO dtos.ConsultaRequestBody, ctx cont
 	}
 
 	consulta.ID = id
+
 	consulta, err = s.r.Update(consulta, ctx)
 	if err != nil {
 		return resp, err
@@ -114,7 +190,7 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			err = &errs.ErrRecordNotFound{
-				Message: fmt.Sprintf("falha ao deletar consulta: consulta de id:%v não encontrado", id),
+				Message: fmt.Sprintf("falha ao deletar consulta: consulta de id:%v não encontrada", id),
 			}
 		}
 	}

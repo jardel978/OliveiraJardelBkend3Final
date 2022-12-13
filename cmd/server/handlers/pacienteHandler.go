@@ -30,7 +30,7 @@ func (ph *pacienteHandler) SalvarPaciente(ctx *gin.Context) {
 		return
 	}
 	resp, err := ph.s.Save(dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}
@@ -83,7 +83,7 @@ func (ph *pacienteHandler) AtualizarPaciente(ctx *gin.Context) {
 		return
 	}
 	resp, err := ph.s.Update(uint(idNum), dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}
@@ -103,7 +103,7 @@ func (ph *pacienteHandler) DeletarPaciente(ctx *gin.Context) {
 	err = ph.s.Delete(uint(idNum), ctx)
 	if err != nil {
 		codeValue := 400
-		if strings.Contains("não encontrada", err.Error()) {
+		if strings.Contains("não encontrado", err.Error()) {
 			codeValue = 404
 		}
 		web.Failure(ctx, codeValue, err)

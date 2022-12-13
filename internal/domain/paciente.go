@@ -14,9 +14,9 @@ type Paciente struct {
 	Sobrenome      string         `gorm:"column:sobrenome;size=40;not null"`
 	RG             string         `gorm:"column:rg;size=20;not null;unique"`
 	DataNascimento time.Time      `gorm:"column:data_nascimento;not null"`
+	Prontuario     `gorm:"constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
+	Endereco       `gorm:"constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
 	Consultas      []Consulta
-	Prontuario     `gorm:"foreignkey:ProntuarioID;constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
-	Endereco       `gorm:"foreignkey:EnderecoID;constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
 }
 
 func (p *Paciente) TableName() string {
