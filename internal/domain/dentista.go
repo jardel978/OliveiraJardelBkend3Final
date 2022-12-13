@@ -15,7 +15,7 @@ type Dentista struct {
 	Endereco
 	Matricula string `gorm:"column:matricula;size=20;not null"`
 	Consultas []Consulta
-	Clinicas  []Clinica `gorm:"many2many:dentistas_clinicas"`
+	Clinicas  []Clinica `gorm:"many2many:clinica_dentistas"`
 }
 
 func (d *Dentista) TableName() string {

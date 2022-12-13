@@ -6,13 +6,12 @@ import (
 )
 
 type DentistaRequestBody struct {
-	Nome      string `json:"nome"`
-	Sobrenome string `json:"sobrenome"`
-	//domain.Endereco `json:"endereco"`
-	EnderecoRequestBody `json:"endereco_id"`
+	Nome                string `json:"nome"`
+	Sobrenome           string `json:"sobrenome"`
+	EnderecoRequestBody `json:"endereco"`
 	Matricula           string                `json:"matricula"`
 	Consultas           []ConsultaRequestBody `json:"consultas"`
-	Clinicas            []ClinicaRequestBody  `json:"clinica_id"`
+	Clinicas            []ClinicaRequestBody  `json:"clinicas"`
 }
 
 type DentistaResponseBody struct {

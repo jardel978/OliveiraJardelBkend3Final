@@ -30,7 +30,7 @@ func (dh *dentistaHandler) SalvarDentista(ctx *gin.Context) {
 		return
 	}
 	resp, err := dh.s.Save(dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}
@@ -94,7 +94,7 @@ func (dh *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
 		return
 	}
 	resp, err := dh.s.Update(uint(idNum), dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}

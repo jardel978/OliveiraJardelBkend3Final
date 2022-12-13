@@ -35,7 +35,7 @@ func (pg *pacienteGorm) FindAll(ctx context.Context) (list []domain.Paciente, er
 }
 
 func (pg *pacienteGorm) FindByRG(rg string, ctx context.Context) (p domain.Paciente, err error) {
-	err = pg.db.WithContext(ctx).Model(&p).Where("RG", "rg = ?", rg).First(&p).Error
+	err = pg.db.WithContext(ctx).Model(&p).Where("rg = ?", rg).First(&p).Error
 	if err != nil {
 		return p, err
 	}

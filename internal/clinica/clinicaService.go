@@ -135,6 +135,7 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 
 func dtoToEntity(clinicaDTO dtos.ClinicaRequestBody) (clinica domain.Clinica, err error) {
 	var endereco domain.Endereco
+	var list []domain.Dentista
 
 	err = dto.Map(&clinica, clinicaDTO)
 	if err != nil {
@@ -144,7 +145,18 @@ func dtoToEntity(clinicaDTO dtos.ClinicaRequestBody) (clinica domain.Clinica, er
 	if err != nil {
 		return clinica, &errs.ErrInvalidMapping{Err: err}
 	}
+
+	for _, dentistaDTO := range clinicaDTO.Dentistas {
+		var dentista domain.Dentista
+		err = dto.Map(&dentista, dentistaDTO)
+		if err != nil {
+			return clinica, &errs.ErrInvalidMapping{Err: err}
+		}
+		list = append(list, dentista)
+	}
+
 	clinica.Endereco = endereco
+	clinica.Dentistas = list
 
 	return clinica, nil
 }

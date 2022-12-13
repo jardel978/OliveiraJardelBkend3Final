@@ -114,12 +114,12 @@ func (s *service) FindByMatricula(matricula string, ctx context.Context) (resp d
 }
 
 func (s *service) Update(id uint, dentistaDTO dtos.DentistaRequestBody, ctx context.Context) (resp dtos.DentistaResponseBody, err error) {
+	dentistaDTO.ID = id
 	dentista, errConvert := dtoToEntity(dentistaDTO)
 	if errConvert != nil {
 		return resp, errConvert
 	}
 
-	dentista.DentistaID = id
 	dentista, err = s.r.Update(dentista, ctx)
 	if err != nil {
 		return resp, err
@@ -145,6 +145,7 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 
 func dtoToEntity(dentistaDTO dtos.DentistaRequestBody) (dentista domain.Dentista, err error) {
 	var endereco domain.Endereco
+	var listClinicas []domain.Clinica
 
 	err = dto.Map(&dentista, dentistaDTO)
 	if err != nil {
@@ -155,7 +156,17 @@ func dtoToEntity(dentistaDTO dtos.DentistaRequestBody) (dentista domain.Dentista
 		return dentista, &errs.ErrInvalidMapping{Err: err}
 	}
 
+	for _, clinicaDTO := range dentistaDTO.Clinicas {
+		var clinica domain.Clinica
+		err = dto.Map(&clinica, clinicaDTO)
+		if err != nil {
+			return dentista, &errs.ErrInvalidMapping{Err: err}
+		}
+		listClinicas = append(listClinicas, clinica)
+	}
+
 	dentista.Endereco = endereco
+	dentista.Clinicas = listClinicas
 
 	return dentista, nil
 }

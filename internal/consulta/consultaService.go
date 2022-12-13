@@ -6,10 +6,13 @@ import (
 	"OliveiraJardelBkend3Final/internal/dtos"
 	"OliveiraJardelBkend3Final/internal/errs"
 	"OliveiraJardelBkend3Final/internal/paciente"
+	"OliveiraJardelBkend3Final/internal/utils"
 	"context"
 	"fmt"
 	"github.com/dranikpg/dto-mapper"
 	"gorm.io/gorm"
+	"log"
+	"time"
 )
 
 type CService interface {
@@ -32,6 +35,7 @@ func NewConsultaService() CService {
 	return &service{
 		r:  NewConsultaRepository(),
 		dr: dentista.NewDentistaRepository(),
+		pr: paciente.NewPacienteRepository(),
 	}
 }
 
@@ -199,7 +203,16 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 
 func dtoToEntity(consultaDTO dtos.ConsultaRequestBody) (consulta domain.Consulta, err error) {
 
-	err = dto.Map(&consulta, consultaDTO)
+	mapper := dto.Mapper{}
+	mapper.AddConvFunc(func(data string, mapper *dto.Mapper) time.Time {
+		date, err := utils.ParseDataTime(data)
+		if err != nil {
+			log.Println(err)
+		}
+		return date
+	})
+
+	err = mapper.Map(&consulta, consultaDTO)
 	if err != nil {
 		return consulta, &errs.ErrInvalidMapping{Err: err}
 	}
@@ -208,23 +221,11 @@ func dtoToEntity(consultaDTO dtos.ConsultaRequestBody) (consulta domain.Consulta
 }
 
 func entityToDTO(consulta domain.Consulta) (resp dtos.ConsultaResponseBody, err error) {
-	var pacienteResp dtos.PacienteResponseBody
-	var dentistaResp dtos.DentistaResponseBody
+
 	err = dto.Map(&resp, consulta)
 	if err != nil {
 		return resp, &errs.ErrInvalidMapping{Err: err}
 	}
-	err = dto.Map(&pacienteResp, consulta.PacienteID)
-	if err != nil {
-		return resp, &errs.ErrInvalidMapping{Err: err}
-	}
-	err = dto.Map(&dentistaResp, consulta.DentistaID)
-	if err != nil {
-		return resp, &errs.ErrInvalidMapping{Err: err}
-	}
-
-	resp.PacienteResponseBody = pacienteResp
-	resp.DentistaResponseBody = dentistaResp
 
 	return resp, nil
 }

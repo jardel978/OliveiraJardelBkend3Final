@@ -1,16 +1,16 @@
 package dtos
 
 import (
-	"OliveiraJardelBkend3Final/internal/domain"
 	"gorm.io/gorm"
 	"time"
 )
 
 type ClinicaRequestBody struct {
+	ID                  uint
 	Nome                string `json:"nome"`
 	CNPJ                string `json:"cnpj"`
 	EnderecoRequestBody `json:"endereco"`
-	Dentistas           []domain.Dentista `json:"dentistas"`
+	Dentistas           []DentistaRequestBody `json:"dentistas"`
 }
 
 type ClinicaResponseBody struct {
@@ -21,5 +21,5 @@ type ClinicaResponseBody struct {
 	Nome                 string         `json:"nome"`
 	CNPJ                 string         `json:"cnpj"`
 	EnderecoResponseBody `json:"endereco"`
-	Dentistas            []domain.Dentista `json:"dentistas"`
+	Dentistas            []DentistaResponseBody `json:"dentistas"`
 }

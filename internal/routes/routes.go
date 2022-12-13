@@ -54,7 +54,7 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 			consultas.GET("/:id", consultaHandler.BuscarConsultaPorId)
 			consultas.GET("/pacientes/:rg", consultaHandler.BuscarConsultaPorPacienteRG)
 			consultas.POST("/", consultaHandler.SalvarConsulta)
-			consultas.POST("", consultaHandler.SalvarConsultaComPacienteRgDentistaMatricula)
+			consultas.POST("/salvar", consultaHandler.SalvarConsultaComPacienteRgDentistaMatricula)
 			consultas.PUT("/:id", consultaHandler.AtualizarConsulta)
 			consultas.PATCH("/:id", consultaHandler.AtualizarConsulta)
 			consultas.DELETE("/:id", consultaHandler.DeletarConsulta)
