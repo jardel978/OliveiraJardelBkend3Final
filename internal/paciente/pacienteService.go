@@ -4,10 +4,13 @@ import (
 	"OliveiraJardelBkend3Final/internal/domain"
 	"OliveiraJardelBkend3Final/internal/dtos"
 	"OliveiraJardelBkend3Final/internal/errs"
+	"OliveiraJardelBkend3Final/internal/utils"
 	"context"
 	"fmt"
 	"github.com/dranikpg/dto-mapper"
 	"gorm.io/gorm"
+	"log"
+	"time"
 )
 
 type PService interface {
@@ -22,7 +25,7 @@ type service struct {
 	r PRepository
 }
 
-func NewPacinteService() PService {
+func NewPacienteService() PService {
 	return &service{
 		r: NewPacienteRepository(),
 	}
@@ -31,6 +34,7 @@ func NewPacinteService() PService {
 func (s *service) Save(pacienteDTO dtos.PacienteRequestBody, ctx context.Context) (resp dtos.PacienteResponseBody, err error) {
 	paciente, errConvert := dtoToEntity(pacienteDTO)
 	if errConvert != nil {
+		log.Printf("\nerrConvert: %v\n", errConvert)
 		return resp, errConvert
 	}
 
@@ -98,6 +102,7 @@ func (s *service) Update(id uint, pacienteDTO dtos.PacienteRequestBody, ctx cont
 	}
 
 	paciente.ID = id
+
 	paciente, err = s.r.Update(paciente, ctx)
 	if err != nil {
 		return resp, err
@@ -125,7 +130,23 @@ func dtoToEntity(pacienteDTO dtos.PacienteRequestBody) (paciente domain.Paciente
 	var endereco domain.Endereco
 	var prontuario domain.Prontuario
 
-	err = dto.Map(&paciente, pacienteDTO)
+	mapper := dto.Mapper{}
+	mapper.AddConvFunc(func(dataNascimento string, mapper *dto.Mapper) time.Time {
+		date, err := utils.ParseDate(dataNascimento)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		return date
+	})
+	if pacienteDTO.DataNascimento != "" {
+		dateTime, errTime := utils.ParseDate(pacienteDTO.DataNascimento)
+		if errTime != nil {
+			return paciente, errTime
+		}
+		paciente.DataNascimento = dateTime
+	}
+
+	err = mapper.Map(&paciente, pacienteDTO)
 	if err != nil {
 		return paciente, &errs.ErrInvalidMapping{Err: err}
 	}
@@ -137,6 +158,7 @@ func dtoToEntity(pacienteDTO dtos.PacienteRequestBody) (paciente domain.Paciente
 	if err != nil {
 		return paciente, &errs.ErrInvalidMapping{Err: err}
 	}
+
 	paciente.Endereco = endereco
 	paciente.Prontuario = prontuario
 

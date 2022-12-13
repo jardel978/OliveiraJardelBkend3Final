@@ -15,10 +15,10 @@ type Paciente struct {
 	RG             string         `gorm:"column:rg;size=20;not null;unique"`
 	DataNascimento time.Time      `gorm:"column:data_nascimento;not null"`
 	Consultas      []Consulta
-	Prontuario     `gorm:"constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
-	Endereco       `gorm:"constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
+	Prontuario     `gorm:"foreignkey:ProntuarioID;constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
+	Endereco       `gorm:"foreignkey:EnderecoID;constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
 }
 
-func (d *Paciente) TableName() string {
+func (p *Paciente) TableName() string {
 	return "pacientes"
 }

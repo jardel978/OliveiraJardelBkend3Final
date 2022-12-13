@@ -6,15 +6,12 @@ import (
 )
 
 type PacienteRequestBody struct {
-	Nome                  string    `json:"nome"`
-	Sobrenome             string    `json:"sobrenome"`
-	DataNascimento        time.Time `json:"data_nascimento" `
-	RG                    string    `json:"rg"`
+	Nome                  string `json:"nome"`
+	Sobrenome             string `json:"sobrenome"`
+	DataNascimento        string `json:"data_nascimento" `
+	RG                    string `json:"rg"`
 	EnderecoRequestBody   `json:"endereco"`
 	ProntuarioRequestBody `json:"prontuario"`
-	//domain.Endereco   `json:"endereco"`
-	//domain.Prontuario `json:"prontuario"`
-	//DataCadastro   time.Time `json:"data_cadastro"`
 }
 
 type PacienteResponseBody struct {
@@ -29,5 +26,4 @@ type PacienteResponseBody struct {
 	DataNascimento         time.Time      `json:"data_nascimento"`
 	EnderecoResponseBody   `json:"endereco"`
 	ProntuarioResponseBody `json:"prontuario"`
-	//DataCadastro   time.Time `json:"data_cadastro"`
 }

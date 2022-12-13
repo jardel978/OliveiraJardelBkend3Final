@@ -40,7 +40,7 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 		{
 			dentistas.GET("/", dentistaHandler.BuscarDentistas)
 			dentistas.GET("/:id", dentistaHandler.BuscarDentistaPorId)
-			dentistas.GET("/:matricula", dentistaHandler.BuscarDentistaPorMatricula)
+			dentistas.GET("/matriculas/:matricula", dentistaHandler.BuscarDentistaPorMatricula)
 			dentistas.POST("/", dentistaHandler.SalvarDentista)
 			dentistas.PUT("/:id", dentistaHandler.AtualizarDentista)
 			dentistas.PATCH("/:id", dentistaHandler.AtualizarDentista)

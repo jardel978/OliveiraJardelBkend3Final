@@ -27,7 +27,7 @@ func (pg *pacienteGorm) Save(paciente domain.Paciente, ctx context.Context) (p d
 }
 
 func (pg *pacienteGorm) FindAll(ctx context.Context) (list []domain.Paciente, err error) {
-	err = pg.db.WithContext(ctx).Model(&domain.Paciente{}).Preload("Endereco").Preload("Prontuario").Find(&list).Error
+	err = pg.db.WithContext(ctx).Model(&domain.Paciente{}).Preload("Enderecos").Preload("Prontuarios").Find(&list).Error
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (pg *pacienteGorm) FindByRG(rg string, ctx context.Context) (p domain.Pacie
 }
 
 func (pg *pacienteGorm) FindById(id uint, ctx context.Context) (p domain.Paciente, err error) {
-	err = pg.db.WithContext(ctx).Model(&p).Preload("Endereco").Preload("Prontuario").First(&p, "id = ?", id).Error
+	err = pg.db.WithContext(ctx).Model(&p).Preload("Enderecos").Preload("Prontuarios").First(&p, "id = ?", id).Error
 	if err != nil {
 		return p, err
 	}

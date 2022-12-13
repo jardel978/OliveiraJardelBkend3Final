@@ -16,7 +16,7 @@ type pacienteHandler struct {
 
 func NewPacienteHandler() *pacienteHandler {
 	return &pacienteHandler{
-		s: paciente.NewPacinteService(),
+		s: paciente.NewPacienteService(),
 	}
 }
 
