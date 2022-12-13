@@ -1,7 +1,6 @@
 package dtos
 
 import (
-	"OliveiraJardelBkend3Final/internal/domain"
 	"gorm.io/gorm"
 	"time"
 )
@@ -15,13 +14,13 @@ type ConsultaRequestBody struct {
 }
 
 type ConsultaResponseBody struct {
-	ID              uint           `json:"id"`
-	CreatedAt       time.Time      `json:"created_at,omitempty"`
-	UpdatedAt       time.Time      `json:"updated_at,omitempty"`
-	DeletedAt       gorm.DeletedAt `json:"deleted_at,omitempty"`
-	domain.Paciente `json:"paciente"`
-	domain.Dentista `json:"dentista"`
-	Data            time.Time `json:"data"`
-	Horario         time.Time `json:"horario"`
-	Descricao       string    `json:"descricao,omitempty"`
+	ID                   uint           `json:"id"`
+	CreatedAt            time.Time      `json:"created_at,omitempty"`
+	UpdatedAt            time.Time      `json:"updated_at,omitempty"`
+	DeletedAt            gorm.DeletedAt `json:"deleted_at,omitempty"`
+	PacienteResponseBody `json:"paciente"`
+	DentistaResponseBody `json:"dentista"`
+	Data                 time.Time `json:"data"`
+	Horario              time.Time `json:"horario"`
+	Descricao            string    `json:"descricao,omitempty"`
 }

@@ -6,7 +6,7 @@
     host = "localhost"
     port = "3306"
     user = "root"
-    password = "7890123"
+    password = "root"
     name = "db_med_odonto"
     readTimeout = "30s"
     writeTimeout = "30s"
