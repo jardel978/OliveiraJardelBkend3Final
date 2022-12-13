@@ -7,13 +7,13 @@ import (
 )
 
 type DentistaRequestBody struct {
-	Nome      string `json:"nome" binding:"required"`
-	Sobrenome string `json:"sobrenome" binding:"required"`
+	Nome      string `json:"nome"`
+	Sobrenome string `json:"sobrenome"`
 	//domain.Endereco `json:"endereco"`
 	EnderecoID uint              `json:"endereco_id"`
-	Matricula  string            `json:"matricula" binding:"required"`
+	Matricula  string            `json:"matricula"`
 	Consultas  []domain.Consulta `json:"consultas"`
-	ClinicaID  uint              `json:"clinica_id" binding:"required"`
+	ClinicaID  uint              `json:"clinica_id"`
 }
 
 type DentistaResponseBody struct {

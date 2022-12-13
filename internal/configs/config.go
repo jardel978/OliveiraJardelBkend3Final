@@ -62,7 +62,7 @@ func Load() {
 		}
 	}
 
-	cfg = new(config) // o mesmo que &config{} (vai criar um ponteiro de config para gente)
+	cfg = new(config)
 
 	cfg.API = APIConfig{
 		Port:    viper.GetString("api.port"),

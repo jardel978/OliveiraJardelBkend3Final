@@ -8,9 +8,10 @@ import (
 	"fmt"
 	"github.com/dranikpg/dto-mapper"
 	"gorm.io/gorm"
+	"log"
 )
 
-type Service interface {
+type CService interface {
 	Save(clinicaDTO dtos.ClinicaRequestBody, ctx context.Context) (resp dtos.ClinicaResponseBody, err error)
 	FindAll(ctx context.Context) (resp []dtos.ClinicaResponseBody, err error)
 	FindById(id uint, ctx context.Context) (resp dtos.ClinicaResponseBody, err error)
@@ -19,28 +20,34 @@ type Service interface {
 }
 
 type service struct {
-	r Repository
+	r CRepository
 }
 
-func NewClinicaService() Service {
+func NewClinicaService() CService {
 	return &service{
 		r: NewClinicaRepository(),
 	}
 }
 
 func (s *service) Save(clinicaDTO dtos.ClinicaRequestBody, ctx context.Context) (resp dtos.ClinicaResponseBody, err error) {
-	var clinica domain.Clinica
-	err = dto.Map(&clinica, clinicaDTO)
-	if err != nil {
-		return resp, &errs.ErrInvalidMapping{Err: err}
+	clinica, errConvert := dtoToEntity(clinicaDTO)
+	if errConvert != nil {
+		return resp, errConvert
 	}
+
 	clinica, err = s.r.Save(clinica, ctx)
 	if err != nil {
 		return resp, err
 	}
-	err = dto.Map(&resp, clinica)
-	if err != nil {
-		return resp, &errs.ErrInvalidMapping{Err: err}
+	//clinica.EnderecoID = clinica.Endereco.ID
+	//clinica, err = s.r.Update(clinica, ctx)
+	//if err != nil {
+	//	return resp, err
+	//}
+
+	resp, errConvert = entityToDTO(clinica)
+	if errConvert != nil {
+		return resp, errConvert
 	}
 
 	return resp, nil
@@ -57,10 +64,20 @@ func (s *service) FindAll(ctx context.Context) (resp []dtos.ClinicaResponseBody,
 		}
 		return resp, err
 	}
-	err = dto.Map(&resp, list)
-	if err != nil {
-		return resp, &errs.ErrInvalidMapping{Err: err}
+
+	log.Printf("\nlist - (%d) - clinicas: %v\n", len(list), list)
+
+	if len(list) > 0 {
+		for _, clinica := range list {
+			clinicaDTO, errConvert := entityToDTO(clinica)
+			if errConvert != nil {
+				return resp, errConvert
+			}
+			resp = append(resp, clinicaDTO)
+		}
 	}
+
+	log.Printf("\nresp clinicas: %v\n", resp)
 	return resp, nil
 }
 
@@ -75,26 +92,32 @@ func (s *service) FindById(id uint, ctx context.Context) (resp dtos.ClinicaRespo
 		}
 		return resp, err
 	}
-	err = dto.Map(&resp, clinica)
+	fmt.Printf("clinica get: %v\n", clinica)
+
+	resp, err = entityToDTO(clinica)
 	if err != nil {
-		return resp, &errs.ErrInvalidMapping{Err: err}
+		return resp, err
 	}
+	fmt.Printf("clinicadto: %v\n", resp)
+
 	return resp, nil
 }
 func (s *service) Update(id uint, clinicaDTO dtos.ClinicaRequestBody, ctx context.Context) (resp dtos.ClinicaResponseBody, err error) {
-	var clinica domain.Clinica
-	err = dto.Map(&clinica, clinicaDTO)
-	if err != nil {
-		return resp, &errs.ErrInvalidMapping{Err: err}
+	clinica, errConvert := dtoToEntity(clinicaDTO)
+	if errConvert != nil {
+		return resp, errConvert
 	}
+
 	clinica.ID = id
+
 	clinica, err = s.r.Update(clinica, ctx)
 	if err != nil {
 		return resp, err
 	}
-	err = dto.Map(&resp, clinica)
-	if err != nil {
-		return resp, &errs.ErrInvalidMapping{Err: err}
+
+	resp, errConvert = entityToDTO(clinica)
+	if errConvert != nil {
+		return resp, errConvert
 	}
 	return resp, nil
 }
@@ -108,4 +131,36 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 		}
 	}
 	return err
+}
+
+func dtoToEntity(clinicaDTO dtos.ClinicaRequestBody) (clinica domain.Clinica, err error) {
+	var endereco domain.Endereco
+
+	err = dto.Map(&clinica, clinicaDTO)
+	if err != nil {
+		return clinica, &errs.ErrInvalidMapping{Err: err}
+	}
+	err = dto.Map(&endereco, clinicaDTO.EnderecoRequestBody)
+	if err != nil {
+		return clinica, &errs.ErrInvalidMapping{Err: err}
+	}
+	clinica.Endereco = endereco
+
+	return clinica, nil
+}
+
+func entityToDTO(clinica domain.Clinica) (resp dtos.ClinicaResponseBody, err error) {
+	var enderecoResp dtos.EnderecoResponseBody
+	err = dto.Map(&resp, clinica)
+	if err != nil {
+		return resp, &errs.ErrInvalidMapping{Err: err}
+	}
+	err = dto.Map(&enderecoResp, clinica.Endereco)
+	if err != nil {
+		return resp, &errs.ErrInvalidMapping{Err: err}
+	}
+
+	resp.EnderecoResponseBody = enderecoResp
+
+	return resp, nil
 }

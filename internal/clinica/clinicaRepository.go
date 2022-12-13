@@ -5,7 +5,7 @@ import (
 	"context"
 )
 
-type Repository interface {
+type CRepository interface {
 	Save(clinica domain.Clinica, ctx context.Context) (domain.Clinica, error)
 	FindAll(ctx context.Context) ([]domain.Clinica, error)
 	FindById(id uint, ctx context.Context) (domain.Clinica, error)
@@ -17,7 +17,7 @@ type repository struct {
 	repo IClinicaRepository
 }
 
-func NewClinicaRepository() Repository {
+func NewClinicaRepository() CRepository {
 	return &repository{repo: NewClinicaGorm()}
 }
 

@@ -15,12 +15,9 @@ type Paciente struct {
 	RG             string         `gorm:"column:rg;size=20;not null;unique"`
 	DataNascimento time.Time      `gorm:"column:data_nascimento;not null"`
 	Consultas      []Consulta
-	Prontuario
-	Endereco
+	Prontuario     `gorm:"constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
+	Endereco       `gorm:"constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
 }
-
-//NomeCompleto   string    `gorm:"->;type:varchar GENERATED ALWAYS AS (concat(nome,' ',sobrenome));default:(-);"`
-//DataCadastro   time.Time `json:"data_cadastro"`
 
 func (d *Paciente) TableName() string {
 	return "pacientes"

@@ -7,7 +7,7 @@ import (
 )
 
 type EvolucaoTratamentoRequestBody struct {
-	ProntuarioID uint   `json:"prontuario" binding:"required"`
+	ProntuarioID uint   `json:"prontuario"`
 	Descricao    string `json:"descricao"`
 }
 
@@ -16,12 +16,12 @@ type EvolucaoTratamentoResponseBody struct {
 	CreatedAt         time.Time      `json:"created_at,omitempty"`
 	UpdatedAt         time.Time      `json:"updated_at,omitempty"`
 	DeletedAt         gorm.DeletedAt `json:"deleted_at,omitempty"`
-	domain.Prontuario `json:"prontuario" binding:"required"`
+	domain.Prontuario `json:"prontuario"`
 	Descricao         string `json:"descricao,omitempty"`
 }
 
 type PlanoTratamentoRequestBody struct {
-	ProntuarioID uint   `json:"prontuario" binding:"required"`
+	ProntuarioID uint   `json:"prontuario"`
 	Descricao    string `json:"descricao"`
 }
 
@@ -30,7 +30,7 @@ type PlanoTratamentoResponseBody struct {
 	CreatedAt         time.Time      `json:"created_at,omitempty"`
 	UpdatedAt         time.Time      `json:"updated_at,omitempty"`
 	DeletedAt         gorm.DeletedAt `json:"deleted_at,omitempty"`
-	domain.Prontuario `json:"prontuario" binding:"required"`
+	domain.Prontuario `json:"prontuario"`
 	Descricao         string `json:"descricao,omitempty"`
 }
 

@@ -19,6 +19,7 @@ func NewClinicaGorm() IClinicaRepository {
 
 func (cg *clinicaGorm) Save(clinica domain.Clinica, ctx context.Context) (c domain.Clinica, err error) {
 	err = cg.db.WithContext(ctx).Save(&clinica).Error
+	cg.db.WithContext(ctx).Unscoped().Delete(&domain.Endereco{})
 	if err != nil {
 		return c, err
 	}
@@ -26,8 +27,7 @@ func (cg *clinicaGorm) Save(clinica domain.Clinica, ctx context.Context) (c doma
 }
 
 func (cg *clinicaGorm) FindAll(ctx context.Context) (list []domain.Clinica, err error) {
-	//err = cg.db.WithContext(ctx).Model(&domain.Clinica{}).Find(&list).Error
-	err = cg.db.Model(&domain.Clinica{}).Find(&list).Error
+	err = cg.db.WithContext(ctx).Model(&domain.Clinica{}).Preload("Endereco").Find(&list).Error
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (cg *clinicaGorm) FindAll(ctx context.Context) (list []domain.Clinica, err 
 }
 
 func (cg *clinicaGorm) FindById(id uint, ctx context.Context) (c domain.Clinica, err error) {
-	err = cg.db.WithContext(ctx).Model(&domain.Clinica{}).First(&c, id).Error
+	err = cg.db.WithContext(ctx).Model(&c).Preload("Endereco").First(&c, "id = ?", id).Error
 	if err != nil {
 		return c, err
 	}
@@ -44,6 +44,7 @@ func (cg *clinicaGorm) FindById(id uint, ctx context.Context) (c domain.Clinica,
 
 func (cg *clinicaGorm) Update(clinica domain.Clinica, ctx context.Context) (c domain.Clinica, err error) {
 	err = cg.db.WithContext(ctx).Model(&clinica).Updates(clinica).Error
+	cg.db.WithContext(ctx).Unscoped().Delete(&domain.Endereco{})
 	if err != nil {
 		return c, err
 	}
@@ -51,7 +52,8 @@ func (cg *clinicaGorm) Update(clinica domain.Clinica, ctx context.Context) (c do
 }
 
 func (cg *clinicaGorm) Delete(id uint, ctx context.Context) (err error) {
-	err = cg.db.WithContext(ctx).Delete(&domain.Clinica{}, id).Error
+	err = cg.db.WithContext(ctx).Delete(&domain.Clinica{}, "id = ?", id).Error
+	//cg.db.WithContext(ctx).Unscoped().Delete(&domain.Endereco{})
 	if err != nil {
 		return err
 	}

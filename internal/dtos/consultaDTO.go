@@ -7,10 +7,10 @@ import (
 )
 
 type ConsultaRequestBody struct {
-	PacienteID uint      `json:"paciente_id" binding:"required"`
-	DentistaID uint      `json:"dentista_id" binding:"required"`
-	Data       time.Time `json:"data" binding:"required"`
-	Horario    time.Time `json:"horario" binding:"required"`
+	PacienteID uint      `json:"paciente_id"`
+	DentistaID uint      `json:"dentista_id"`
+	Data       time.Time `json:"data"`
+	Horario    time.Time `json:"horario"`
 	Descricao  string    `json:"descricao"`
 }
 

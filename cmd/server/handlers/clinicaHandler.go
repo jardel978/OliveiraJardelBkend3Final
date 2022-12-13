@@ -12,7 +12,7 @@ import (
 )
 
 type clinicaHandler struct {
-	s clinica.Service
+	s clinica.CService
 }
 
 func NewClinicaHandler() *clinicaHandler {
@@ -31,7 +31,7 @@ func (c *clinicaHandler) SalvarClinica(ctx *gin.Context) {
 		return
 	}
 	resp, err := c.s.Save(dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}
@@ -84,7 +84,7 @@ func (c *clinicaHandler) AtualizarClinica(ctx *gin.Context) {
 		return
 	}
 	resp, err := c.s.Update(uint(idNum), dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}
