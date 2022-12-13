@@ -78,7 +78,7 @@ type Endereco struct {
 	Cidade      string `gorm:"column:cidade;size=20;not null"`
 	Complemento string `gorm:"column:complemento;size=250"`
 	Estado      Estado `gorm:"column:estado"`
-	ClinicaID   uint
-	DentistaID  uint
-	PacienteID  uint
+	ClinicaID   uint   `gorm:"foreignkey:ClinicaID"`
+	DentistaID  uint   `gorm:"foreignkey:DentistaID"`
+	PacienteID  uint   `gorm:"foreignkey:PacienteID"`
 }
