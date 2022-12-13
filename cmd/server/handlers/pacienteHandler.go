@@ -30,7 +30,7 @@ func (ph *pacienteHandler) SalvarPaciente(ctx *gin.Context) {
 		return
 	}
 	resp, err := ph.s.Save(dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}
@@ -83,7 +83,7 @@ func (ph *pacienteHandler) AtualizarPaciente(ctx *gin.Context) {
 		return
 	}
 	resp, err := ph.s.Update(uint(idNum), dto, ctx)
-	if errDtoJSON != nil {
+	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
 	}

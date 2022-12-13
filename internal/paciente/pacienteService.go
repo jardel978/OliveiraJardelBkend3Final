@@ -95,6 +95,7 @@ func (s *service) FindById(id uint, ctx context.Context) (resp dtos.PacienteResp
 
 	return resp, nil
 }
+
 func (s *service) Update(id uint, pacienteDTO dtos.PacienteRequestBody, ctx context.Context) (resp dtos.PacienteResponseBody, err error) {
 	paciente, errConvert := dtoToEntity(pacienteDTO)
 	if errConvert != nil {
@@ -114,6 +115,7 @@ func (s *service) Update(id uint, pacienteDTO dtos.PacienteRequestBody, ctx cont
 	}
 	return resp, nil
 }
+
 func (s *service) Delete(id uint, ctx context.Context) error {
 	err := s.r.Delete(id, ctx)
 	if err != nil {
@@ -130,11 +132,13 @@ func dtoToEntity(pacienteDTO dtos.PacienteRequestBody) (paciente domain.Paciente
 	var endereco domain.Endereco
 	var prontuario domain.Prontuario
 
+	log.Println(pacienteDTO)
+
 	mapper := dto.Mapper{}
 	mapper.AddConvFunc(func(dataNascimento string, mapper *dto.Mapper) time.Time {
 		date, err := utils.ParseDate(dataNascimento)
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
 		}
 		return date
 	})

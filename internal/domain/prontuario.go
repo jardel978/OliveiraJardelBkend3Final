@@ -4,9 +4,8 @@ import "gorm.io/gorm"
 
 type PlanoTratamento struct {
 	gorm.Model
-	ProntuarioID uint `gorm:"not null"`
-	Prontuario
-	Descricao string `gorm:"column:descricao;size=500"`
+	ProntuarioID uint   `gorm:"not null"`
+	Descricao    string `gorm:"column:descricao;size=500"`
 }
 
 func (d *PlanoTratamento) TableName() string {
@@ -15,9 +14,8 @@ func (d *PlanoTratamento) TableName() string {
 
 type EvolucaoTratamento struct {
 	gorm.Model
-	ProntuarioID uint `gorm:"not null"`
-	Prontuario
-	Descricao string `gorm:"column:descricao;size=500"`
+	ProntuarioID uint   `gorm:"not null"`
+	Descricao    string `gorm:"column:descricao;size=500"`
 }
 
 func (d *EvolucaoTratamento) TableName() string {
