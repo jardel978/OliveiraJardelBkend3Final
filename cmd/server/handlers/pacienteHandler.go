@@ -5,7 +5,6 @@ import (
 	"OliveiraJardelBkend3Final/internal/errs"
 	"OliveiraJardelBkend3Final/internal/paciente"
 	"OliveiraJardelBkend3Final/pkg/web"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"strings"
@@ -59,7 +58,7 @@ func (ph *pacienteHandler) BuscarPacientePorId(ctx *gin.Context) {
 	}
 	dto, err := ph.s.FindById(uint(idNum), ctx)
 	if err != nil {
-		web.Failure(ctx, 404, &errs.ErrRecordNotFound{Message: fmt.Sprintf("clínica de id: %v não encontrada.", idNum)})
+		web.Failure(ctx, 404, err)
 		return
 	}
 	web.Success(ctx, 200, dto)

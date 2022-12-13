@@ -14,6 +14,7 @@ type DService interface {
 	Save(dentistaDTO dtos.DentistaRequestBody, ctx context.Context) (resp dtos.DentistaResponseBody, err error)
 	FindAll(ctx context.Context) (resp []dtos.DentistaResponseBody, err error)
 	FindById(id uint, ctx context.Context) (resp dtos.DentistaResponseBody, err error)
+	FindByMatricula(matricula string, ctx context.Context) (c dtos.DentistaResponseBody, err error)
 	Update(id uint, dentistaDTO dtos.DentistaRequestBody, ctx context.Context) (resp dtos.DentistaResponseBody, err error)
 	Delete(id uint, ctx context.Context) error
 }
@@ -78,7 +79,7 @@ func (s *service) FindById(id uint, ctx context.Context) (resp dtos.DentistaResp
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			err = &errs.ErrRecordNotFound{
-				Message: fmt.Sprintf("falha ao buscar dentista: dentista de id:%v não encontrada.", id),
+				Message: fmt.Sprintf("falha ao buscar dentista: dentista de id:%v não encontrado.", id),
 			}
 		}
 		return resp, err
@@ -91,6 +92,27 @@ func (s *service) FindById(id uint, ctx context.Context) (resp dtos.DentistaResp
 
 	return resp, nil
 }
+
+func (s *service) FindByMatricula(matricula string, ctx context.Context) (resp dtos.DentistaResponseBody, err error) {
+	var dentista domain.Dentista
+	dentista, err = s.r.FindByMatricula(matricula, ctx)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			err = &errs.ErrRecordNotFound{
+				Message: fmt.Sprintf("falha ao buscar dentista: dentista de id:%v não encontrada.", matricula),
+			}
+		}
+		return resp, err
+	}
+
+	resp, err = entityToDTO(dentista)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
+}
+
 func (s *service) Update(id uint, dentistaDTO dtos.DentistaRequestBody, ctx context.Context) (resp dtos.DentistaResponseBody, err error) {
 	dentista, errConvert := dtoToEntity(dentistaDTO)
 	if errConvert != nil {
@@ -114,7 +136,7 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			err = &errs.ErrRecordNotFound{
-				Message: fmt.Sprintf("falha ao deletar dentista: dentista de id:%v não encontrada", id),
+				Message: fmt.Sprintf("falha ao deletar dentista: dentista de id:%v não encontrado", id),
 			}
 		}
 	}

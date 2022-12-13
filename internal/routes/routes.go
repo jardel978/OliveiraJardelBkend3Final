@@ -11,6 +11,7 @@ import (
 func ConfigRoutes(router *gin.Engine) *gin.Engine {
 	clinicaHandler := handlers.NewClinicaHandler()
 	pacienteHandler := handlers.NewPacienteHandler()
+	dentistaHandler := handlers.NewDentistaHandler()
 
 	main := router.Group("api/v1") // base url
 	main.GET("/ping", func(ctx *gin.Context) {
@@ -34,6 +35,16 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 			pacientes.PUT("/:id", pacienteHandler.AtualizarPaciente)
 			pacientes.PATCH("/:id", pacienteHandler.AtualizarPaciente)
 			pacientes.DELETE("/:id", pacienteHandler.DeletarPaciente)
+		}
+		dentistas := main.Group("dentistas")
+		{
+			dentistas.GET("/", dentistaHandler.BuscarDentistas)
+			dentistas.GET("/:id", dentistaHandler.BuscarDentistaPorId)
+			dentistas.GET("/:matricula", dentistaHandler.BuscarDentistaPorMatricula)
+			dentistas.POST("/", dentistaHandler.SalvarDentista)
+			dentistas.PUT("/:id", dentistaHandler.AtualizarDentista)
+			dentistas.PATCH("/:id", dentistaHandler.AtualizarDentista)
+			dentistas.DELETE("/:id", dentistaHandler.DeletarDentista)
 		}
 	}
 	return router

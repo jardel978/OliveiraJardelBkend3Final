@@ -5,7 +5,6 @@ import (
 	"OliveiraJardelBkend3Final/internal/dtos"
 	"OliveiraJardelBkend3Final/internal/errs"
 	"OliveiraJardelBkend3Final/pkg/web"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"strings"
@@ -21,7 +20,7 @@ func NewDentistaHandler() *dentistaHandler {
 	}
 }
 
-func (ph *dentistaHandler) SalvarDentista(ctx *gin.Context) {
+func (dh *dentistaHandler) SalvarDentista(ctx *gin.Context) {
 	var dto dtos.DentistaRequestBody
 	errDtoJSON := ctx.ShouldBindJSON(&dto)
 	if errDtoJSON != nil {
@@ -30,7 +29,7 @@ func (ph *dentistaHandler) SalvarDentista(ctx *gin.Context) {
 		})
 		return
 	}
-	resp, err := ph.s.Save(dto, ctx)
+	resp, err := dh.s.Save(dto, ctx)
 	if errDtoJSON != nil {
 		web.Failure(ctx, 400, err)
 		return
@@ -38,8 +37,8 @@ func (ph *dentistaHandler) SalvarDentista(ctx *gin.Context) {
 	web.Success(ctx, 201, resp)
 }
 
-func (ph *dentistaHandler) BuscarDentistas(ctx *gin.Context) {
-	data, err := ph.s.FindAll(ctx)
+func (dh *dentistaHandler) BuscarDentistas(ctx *gin.Context) {
+	data, err := dh.s.FindAll(ctx)
 	if err != nil {
 		web.Failure(ctx, 400, err)
 		return
@@ -47,7 +46,7 @@ func (ph *dentistaHandler) BuscarDentistas(ctx *gin.Context) {
 	web.Success(ctx, 200, data)
 }
 
-func (ph *dentistaHandler) BuscarDentistaPorId(ctx *gin.Context) {
+func (dh *dentistaHandler) BuscarDentistaPorId(ctx *gin.Context) {
 	id := ctx.Param("id")
 
 	idNum, err := strconv.Atoi(id)
@@ -57,15 +56,26 @@ func (ph *dentistaHandler) BuscarDentistaPorId(ctx *gin.Context) {
 		})
 		return
 	}
-	dto, err := ph.s.FindById(uint(idNum), ctx)
+	dto, err := dh.s.FindById(uint(idNum), ctx)
 	if err != nil {
-		web.Failure(ctx, 404, &errs.ErrRecordNotFound{Message: fmt.Sprintf("clínica de id: %v não encontrada.", idNum)})
+		web.Failure(ctx, 404, err)
 		return
 	}
 	web.Success(ctx, 200, dto)
 }
 
-func (ph *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
+func (dh *dentistaHandler) BuscarDentistaPorMatricula(ctx *gin.Context) {
+	matricula := ctx.Param("matricula")
+
+	dto, err := dh.s.FindByMatricula(matricula, ctx)
+	if err != nil {
+		web.Failure(ctx, 404, err)
+		return
+	}
+	web.Success(ctx, 200, dto)
+}
+
+func (dh *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
 	var dto dtos.DentistaRequestBody
 	id := ctx.Param("id")
 	idNum, err := strconv.Atoi(id)
@@ -83,7 +93,7 @@ func (ph *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
 		})
 		return
 	}
-	resp, err := ph.s.Update(uint(idNum), dto, ctx)
+	resp, err := dh.s.Update(uint(idNum), dto, ctx)
 	if errDtoJSON != nil {
 		web.Failure(ctx, 400, err)
 		return
@@ -91,7 +101,7 @@ func (ph *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
 	web.Success(ctx, 200, resp)
 }
 
-func (ph *dentistaHandler) DeletarDentista(ctx *gin.Context) {
+func (dh *dentistaHandler) DeletarDentista(ctx *gin.Context) {
 	id := ctx.Param("id")
 	idNum, err := strconv.Atoi(id)
 	if err != nil {
@@ -101,7 +111,7 @@ func (ph *dentistaHandler) DeletarDentista(ctx *gin.Context) {
 		return
 	}
 
-	err = ph.s.Delete(uint(idNum), ctx)
+	err = dh.s.Delete(uint(idNum), ctx)
 	if err != nil {
 		codeValue := 400
 		if strings.Contains("não encontrada", err.Error()) {

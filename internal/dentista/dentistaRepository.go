@@ -9,7 +9,7 @@ type DRepository interface {
 	Save(dentista domain.Dentista, ctx context.Context) (domain.Dentista, error)
 	FindAll(ctx context.Context) ([]domain.Dentista, error)
 	FindById(id uint, ctx context.Context) (domain.Dentista, error)
-	FindByMatricula(rg string, ctx context.Context) (c domain.Dentista, err error)
+	FindByMatricula(matricula string, ctx context.Context) (c domain.Dentista, err error)
 	Update(dentista domain.Dentista, ctx context.Context) (domain.Dentista, error)
 	Delete(id uint, ctx context.Context) error
 }

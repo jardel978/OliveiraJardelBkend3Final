@@ -78,7 +78,7 @@ func (s *service) FindById(id uint, ctx context.Context) (resp dtos.PacienteResp
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			err = &errs.ErrRecordNotFound{
-				Message: fmt.Sprintf("falha ao buscar paciente: paciente de id:%v não encontrada.", id),
+				Message: fmt.Sprintf("falha ao buscar paciente: paciente de id:%v não encontrado.", id),
 			}
 		}
 		return resp, err
@@ -114,7 +114,7 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			err = &errs.ErrRecordNotFound{
-				Message: fmt.Sprintf("falha ao deletar paciente: paciente de id:%v não encontrada", id),
+				Message: fmt.Sprintf("falha ao deletar paciente: paciente de id:%v não encontrado", id),
 			}
 		}
 	}

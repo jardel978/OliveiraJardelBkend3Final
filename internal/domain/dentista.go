@@ -14,9 +14,6 @@ type Dentista struct {
 	Clinicas  []Clinica `gorm:"column:clinica;not null"`
 }
 
-//NomeCompleto string `gorm:"->;type:GENERATED ALWAYS AS (concat(firstname,' ',lastname));default:(-);"`
-//Endereco     `gorm:"foreignkey:enderecoID"`
-
 func (d *Dentista) TableName() string {
 	return "dentistas"
 }
