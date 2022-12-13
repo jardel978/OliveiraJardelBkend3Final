@@ -4,6 +4,7 @@ import (
 	"OliveiraJardelBkend3Final/internal/domain"
 	"OliveiraJardelBkend3Final/internal/dtos"
 	"OliveiraJardelBkend3Final/internal/errs"
+	"context"
 	"fmt"
 	"github.com/dranikpg/dto-mapper"
 	"gorm.io/gorm"
@@ -97,6 +98,7 @@ func (s *service) Update(id uint, consultaDTO dtos.ConsultaRequestBody, ctx cont
 	}
 
 	consulta.ID = id
+
 	consulta, err = s.r.Update(consulta, ctx)
 	if err != nil {
 		return resp, err
