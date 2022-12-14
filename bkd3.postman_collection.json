@@ -1,0 +1,681 @@
+{
+	"info": {
+		"_postman_id": "a22a33ce-2463-4a96-9e94-469c091ac8d9",
+		"name": "bkd3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17572947"
+	},
+	"item": [
+		{
+			"name": "Clínicas",
+			"item": [
+				{
+					"name": "Salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"SorriDent\",\r\n    \"cnpj\": \"XX.XXX.XXX/0001-XX\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua dois\",\r\n        \"numero\": \"02\",\r\n        \"cep\": \"12345-678\",\r\n        \"complemento\": \"\",\r\n        \"bairro\": \"Buritis\",\r\n        \"cidade\": \"Belo Horizonte\",\r\n        \"estado\": 12\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/clinicas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clinicas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/clinicas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clinicas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/clinicas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clinicas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"SorriDent ATUALIZADA\",\r\n    \"cnpj\": \"00.000.000/0001-77\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua dois\",\r\n        \"numero\": \"02\",\r\n        \"cep\": \"12345-678\",\r\n        \"complemento\": \"\",\r\n        \"bairro\": \"Buritis\",\r\n        \"cidade\": \"Belo Horizonte\",\r\n        \"estado\": 12\r\n    },\r\n    \"dentistas\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/clinicas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clinicas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cnpj\": \"11.111.111/0001-77\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/clinicas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clinicas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/clinicas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clinicas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pacientes",
+			"item": [
+				{
+					"name": "Salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Fulano\",\r\n    \"sobrenome\": \"De Tal\",\r\n    \"data_nascimento\": \"1996-02-15\",\r\n    \"rg\": \"mg13.356.467\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua tres\",\r\n        \"numero\": \"02\",\r\n        \"cep\": \"12345-679\",\r\n        \"complemento\": \"\",\r\n        \"bairro\": \"Buritis\",\r\n        \"cidade\": \"Belo Horizonte\",\r\n        \"estado\": 12\r\n    },\r\n    \"prontuario\": {\r\n        \"consultas\": [],\r\n        \"planos_tratamento\": [],\r\n        \"evolucoes_tratamento\": []\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/pacientes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pacientes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pacientes/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Fulano Atualizado\",\r\n    \"sobrenome\": \"De Tal\",\r\n    \"data_nascimento\": \"1996-02-15\",\r\n    \"rg\": \"mg13.356.467\",\r\n    \"endereco\": {\r\n        \"id\": 1,\r\n        \"logradouro\": \"rua tres\",\r\n        \"numero\": \"02\",\r\n        \"cep\": \"12345-679\",\r\n        \"complemento\": \"\",\r\n        \"bairro\": \"Buritis\",\r\n        \"cidade\": \"Belo Horizonte\",\r\n        \"estado\": 12\r\n    },\r\n    \"prontuario\": {\r\n        \"consultas\": [],\r\n        \"planos_tratamento\": [],\r\n        \"evolucoes_tratamento\": []\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/pacientes/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rg\": \"mg13.356.777\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/pacientes/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pacientes/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dentistas",
+			"item": [
+				{
+					"name": "Salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Dentista\",\r\n    \"sobrenome\": \"Sobrenome\",\r\n    \"matricula\": \"MG89555\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua quatro\",\r\n        \"numero\": \"02\",\r\n        \"cep\": \"12345-023\",\r\n        \"complemento\": \"\",\r\n        \"bairro\": \"Buritis\",\r\n        \"cidade\": \"Belo Horizonte\",\r\n        \"estado\": 12\r\n    },\r\n    \"clinicas\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ],\r\n    \"consultas\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/dentistas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"dentistas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/dentistas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"dentistas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/dentistas/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"dentistas",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Matrícula",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/dentistas/matriculas/MG89552",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"dentistas",
+								"matriculas",
+								"MG89552"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Dentista Atualizado\",\r\n    \"sobrenome\": \"Sobrenome\",\r\n    \"matricula\": \"MG89552\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua tres\",\r\n        \"numero\": \"02\",\r\n        \"cep\": \"12345-679\",\r\n        \"complemento\": \"\",\r\n        \"bairro\": \"Buritis\",\r\n        \"cidade\": \"Belo Horizonte\",\r\n        \"estado\": 12\r\n    },\r\n    \"clinicas\": [],\r\n    \"consultas\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/dentistas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"dentistas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"matricula\": \"MG89000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/dentistas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"dentistas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/dentistas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"dentistas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consultas",
+			"item": [
+				{
+					"name": "Salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"paciente_id\": 1,\r\n    \"dentista_id\": 1,\r\n    \"data\": \"2023-01-03T15:000:05Z07:00\",\r\n    \"descricao\": \"Marcando Consulta\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/consultas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Por RG do paciente e Matrícula do dentista",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": \"2023-01-04T15:000:05Z07:00\",\r\n    \"descricao\": \"Marcando Consulta\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/consultas/salvar?paciente-rg=mg13.356.777&dentista-matricula=MG89000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"salvar"
+							],
+							"query": [
+								{
+									"key": "paciente-rg",
+									"value": "mg13.356.777"
+								},
+								{
+									"key": "dentista-matricula",
+									"value": "MG89000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/consultas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar consultas por RG do paciente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/consultas/pacientes/mg13.356.777",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"pacientes",
+								"mg13.356.777"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/consultas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"paciente_id\": 1,\r\n    \"dentista_id\": 1,\r\n    \"data\": \"2023-01-02\",\r\n    \"horario\": \"2023-01-02T13:20:05Z07:00\",\r\n    \"descricao\": \"Marcando Atualizada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/consultas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": \"2023-01-08\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/consultas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/consultas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/ping",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080/api/v1",
+			"type": "string"
+		}
+	]
+}

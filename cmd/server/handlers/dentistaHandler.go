@@ -6,6 +6,7 @@ import (
 	"OliveiraJardelBkend3Final/internal/errs"
 	"OliveiraJardelBkend3Final/pkg/web"
 	"github.com/gin-gonic/gin"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -29,6 +30,7 @@ func (dh *dentistaHandler) SalvarDentista(ctx *gin.Context) {
 		})
 		return
 	}
+	log.Printf("\nhandler DTO: %v", dto)
 	resp, err := dh.s.Save(dto, ctx)
 	if err != nil {
 		web.Failure(ctx, 400, err)
@@ -78,10 +80,10 @@ func (dh *dentistaHandler) BuscarDentistaPorMatricula(ctx *gin.Context) {
 func (dh *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
 	var dto dtos.DentistaRequestBody
 	id := ctx.Param("id")
-	idNum, err := strconv.Atoi(id)
-	if err != nil {
+	idNum, errId := strconv.Atoi(id)
+	if errId != nil {
 		web.Failure(ctx, 400, &errs.ErrInvalidParams{
-			Err: err,
+			Err: errId,
 		})
 		return
 	}

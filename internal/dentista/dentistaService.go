@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/dranikpg/dto-mapper"
 	"gorm.io/gorm"
+	"log"
 )
 
 type DService interface {
@@ -39,6 +40,8 @@ func (s *service) Save(dentistaDTO dtos.DentistaRequestBody, ctx context.Context
 	if err != nil {
 		return resp, err
 	}
+
+	log.Printf("\nservice dentista: %v", dentista)
 
 	resp, errConvert = entityToDTO(dentista)
 	if errConvert != nil {
@@ -120,6 +123,7 @@ func (s *service) Update(id uint, dentistaDTO dtos.DentistaRequestBody, ctx cont
 		return resp, errConvert
 	}
 
+	log.Printf("\nupdate DTO: %v", dentistaDTO)
 	dentista, err = s.r.Update(dentista, ctx)
 	if err != nil {
 		return resp, err
@@ -173,6 +177,8 @@ func dtoToEntity(dentistaDTO dtos.DentistaRequestBody) (dentista domain.Dentista
 
 func entityToDTO(dentista domain.Dentista) (resp dtos.DentistaResponseBody, err error) {
 	var enderecoResp dtos.EnderecoResponseBody
+	var consultas []dtos.ConsultaResponseBody
+	var clinicas []dtos.ClinicaResponseBody
 
 	err = dto.Map(&resp, dentista)
 	if err != nil {
@@ -183,7 +189,27 @@ func entityToDTO(dentista domain.Dentista) (resp dtos.DentistaResponseBody, err 
 		return resp, &errs.ErrInvalidMapping{Err: err}
 	}
 
+	for _, consulta := range dentista.Consultas {
+		var consultaDTO dtos.ConsultaResponseBody
+		err = dto.Map(&consultaDTO, consulta)
+		if err != nil {
+			return resp, &errs.ErrInvalidMapping{Err: err}
+		}
+		consultas = append(consultas, consultaDTO)
+	}
+
+	for _, clinica := range dentista.Clinicas {
+		var clinicaDTO dtos.ClinicaResponseBody
+		err = dto.Map(&clinicaDTO, clinica)
+		if err != nil {
+			return resp, &errs.ErrInvalidMapping{Err: err}
+		}
+		clinicas = append(clinicas, clinicaDTO)
+	}
+
 	resp.EnderecoResponseBody = enderecoResp
+	resp.Consultas = consultas
+	resp.Clinicas = clinicas
 
 	return resp, nil
 }

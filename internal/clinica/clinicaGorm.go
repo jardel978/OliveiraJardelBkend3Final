@@ -27,7 +27,7 @@ func (cg *clinicaGorm) Save(clinica domain.Clinica, ctx context.Context) (c doma
 }
 
 func (cg *clinicaGorm) FindAll(ctx context.Context) (list []domain.Clinica, err error) {
-	err = cg.db.WithContext(ctx).Model(&domain.Clinica{}).Preload("Endereco").Preload("Dentistas").Find(&list).Error
+	err = cg.db.WithContext(ctx).Model(&domain.Clinica{}).Preload("Endereco").Find(&list).Error
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (cg *clinicaGorm) FindAll(ctx context.Context) (list []domain.Clinica, err 
 }
 
 func (cg *clinicaGorm) FindById(id uint, ctx context.Context) (c domain.Clinica, err error) {
-	err = cg.db.WithContext(ctx).Model(&c).Preload("Endereco").Preload("Dentistas").First(&c, "id = ?", id).Error
+	err = cg.db.WithContext(ctx).Model(&c).Preload("Endereco").First(&c, "id = ?", id).Error
 	if err != nil {
 		return c, err
 	}
