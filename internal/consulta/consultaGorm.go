@@ -5,6 +5,7 @@ import (
 	"OliveiraJardelBkend3Final/internal/domain"
 	"context"
 	"gorm.io/gorm"
+	"log"
 )
 
 type consultaGorm struct {
@@ -51,7 +52,9 @@ func (cg *consultaGorm) FindAllByPacienteID(pacienteID uint, ctx context.Context
 }
 
 func (cg *consultaGorm) Update(consulta domain.Consulta, ctx context.Context) (c domain.Consulta, err error) {
-	err = cg.db.WithContext(ctx).Model(&consulta).Updates(consulta).Error
+	log.Printf("\ngorm - consulta: %v\n", consulta)
+
+	err = cg.db.WithContext(ctx).Table("consultas").Where("id = ?", consulta.Model.ID).Updates(consulta).Error
 	cg.db.WithContext(ctx).Unscoped().Delete(&domain.Endereco{})
 	if err != nil {
 		return c, err

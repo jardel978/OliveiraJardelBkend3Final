@@ -2,16 +2,12 @@ package domain
 
 import (
 	"gorm.io/gorm"
-	"time"
 )
 
 type PlanoTratamento struct {
-	ID           uint `gorm:"primarykey"`
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	DeletedAt    gorm.DeletedAt `gorm:"column:paciente_deleted_at;index"`
-	ProntuarioID uint           `gorm:"foreignkey:ProntuarioID;not null"`
-	Descricao    string         `gorm:"column:descricao;size=500"`
+	gorm.Model
+	ProntuarioID uint   `gorm:"foreignkey:ProntuarioID;not null"`
+	Descricao    string `gorm:"column:descricao;size=500"`
 }
 
 func (d *PlanoTratamento) TableName() string {
@@ -19,12 +15,9 @@ func (d *PlanoTratamento) TableName() string {
 }
 
 type EvolucaoTratamento struct {
-	ID           uint `gorm:"primarykey"`
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	DeletedAt    gorm.DeletedAt `gorm:"column:paciente_deleted_at;index"`
-	ProntuarioID uint           `gorm:"foreignkey:ProntuarioID;not null"`
-	Descricao    string         `gorm:"column:descricao;size=500"`
+	gorm.Model
+	ProntuarioID uint   `gorm:"foreignkey:ProntuarioID;not null"`
+	Descricao    string `gorm:"column:descricao;size=500"`
 }
 
 func (d *EvolucaoTratamento) TableName() string {
@@ -32,7 +25,8 @@ func (d *EvolucaoTratamento) TableName() string {
 }
 
 type Prontuario struct {
-	gorm.Model
+	//gorm.Model
+	ID                  uint `gorm:"primarykey"`
 	PacienteID          uint `gorm:"foreignkey:PacienteID"`
 	PlanosTratamento    []PlanoTratamento
 	EvolucoesTratamento []EvolucaoTratamento

@@ -15,7 +15,7 @@ func ParseDate(date string) (dateTime time.Time, err error) {
 }
 
 func ParseDataTime(horario string) (dateTime time.Time, err error) {
-	t, err := time.Parse(time.RFC3339, horario)
+	t, err := time.Parse("2022-12-14T19:07:21.311-03:00", horario)
 	if err != nil {
 		return t, err
 	}

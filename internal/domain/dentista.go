@@ -1,21 +1,15 @@
 package domain
 
-import (
-	"gorm.io/gorm"
-	"time"
-)
+import "gorm.io/gorm"
 
 type Dentista struct {
-	ID        uint `gorm:"primarykey"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"column:paciente_deleted_at;index"`
-	Nome      string         `gorm:"column:nome;size=20;not null"`
-	Sobrenome string         `gorm:"column:sobrenome;size=40;not null"`
-	Endereco
+	gorm.Model
+	Nome      string `gorm:"column:nome;size=20;not null"`
+	Sobrenome string `gorm:"column:sobrenome;size=40;not null"`
+	Endereco  `gorm:"constraint:OnUpdate:CASCADE;OnDelete:SET NULL;"`
 	Matricula string `gorm:"column:matricula;size=20;not null"`
+	ClinicaID uint
 	Consultas []Consulta
-	Clinicas  []Clinica `gorm:"many2many:clinica_dentistas"`
 }
 
 func (d *Dentista) TableName() string {

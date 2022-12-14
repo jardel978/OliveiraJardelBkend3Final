@@ -102,7 +102,7 @@ func (s *service) Update(id uint, pacienteDTO dtos.PacienteRequestBody, ctx cont
 		return resp, errConvert
 	}
 
-	paciente.ID = id
+	paciente.Model.ID = id
 
 	paciente, err = s.r.Update(paciente, ctx)
 	if err != nil {
@@ -172,6 +172,7 @@ func dtoToEntity(pacienteDTO dtos.PacienteRequestBody) (paciente domain.Paciente
 func entityToDTO(paciente domain.Paciente) (resp dtos.PacienteResponseBody, err error) {
 	var enderecoResp dtos.EnderecoResponseBody
 	var prontuarioResp dtos.ProntuarioResponseBody
+
 	err = dto.Map(&resp, paciente)
 	if err != nil {
 		return resp, &errs.ErrInvalidMapping{Err: err}

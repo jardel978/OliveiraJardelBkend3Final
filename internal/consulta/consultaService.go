@@ -82,8 +82,8 @@ func (s *service) SaveWithPacienteRgDentistaMatricula(pacienteRg string, dentist
 		return resp, err
 	}
 
-	consultaDTO.PacienteID = paciente.ID
-	consultaDTO.DentistaID = dentista.ID
+	consultaDTO.PacienteID = paciente.Model.ID
+	consultaDTO.DentistaID = dentista.Model.ID
 
 	return s.Save(consultaDTO, ctx)
 }
@@ -147,7 +147,7 @@ func (s *service) FindAllByRgPaciente(pacienteRg string, ctx context.Context) (r
 		return resp, err
 	}
 
-	list, err = s.r.FindAllByPacienteID(paciente.ID, ctx)
+	list, err = s.r.FindAllByPacienteID(paciente.Model.ID, ctx)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			err = &errs.ErrRecordNotFound{
@@ -171,17 +171,21 @@ func (s *service) FindAllByRgPaciente(pacienteRg string, ctx context.Context) (r
 }
 
 func (s *service) Update(id uint, consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (resp dtos.ConsultaResponseBody, err error) {
+	log.Printf("\nservice - id: %v\n", id)
+
 	consulta, errConvert := dtoToEntity(consultaDTO)
 	if errConvert != nil {
 		return resp, errConvert
 	}
 
-	consulta.ID = id
+	consulta.Model.ID = id
 
 	consulta, err = s.r.Update(consulta, ctx)
 	if err != nil {
 		return resp, err
 	}
+
+	log.Printf("\nupdate consulta: %v\n", consulta)
 
 	resp, errConvert = entityToDTO(consulta)
 	if errConvert != nil {
@@ -204,8 +208,8 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 func dtoToEntity(consultaDTO dtos.ConsultaRequestBody) (consulta domain.Consulta, err error) {
 
 	mapper := dto.Mapper{}
-	mapper.AddConvFunc(func(data string, mapper *dto.Mapper) time.Time {
-		date, err := utils.ParseDataTime(data)
+	mapper.AddConvFunc(func(DataConsulta string, mapper *dto.Mapper) time.Time {
+		date, err := utils.ParseDataTime(DataConsulta)
 		if err != nil {
 			log.Println(err)
 		}

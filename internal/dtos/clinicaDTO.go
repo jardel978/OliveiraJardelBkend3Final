@@ -14,12 +14,12 @@ type ClinicaRequestBody struct {
 }
 
 type ClinicaResponseBody struct {
-	ID                   uint           `json:"id"`
+	ID                   uint           `json:"id,omitempty"`
 	CreatedAt            time.Time      `json:"created_at,omitempty"`
 	UpdatedAt            time.Time      `json:"updated_at,omitempty"`
 	DeletedAt            gorm.DeletedAt `json:"deleted_at,omitempty"`
-	Nome                 string         `json:"nome"`
-	CNPJ                 string         `json:"cnpj"`
-	EnderecoResponseBody `json:"endereco"`
-	Dentistas            []DentistaResponseBody `json:"dentistas"`
+	Nome                 string         `json:"nome,omitempty"`
+	CNPJ                 string         `json:"cnpj,omitempty"`
+	EnderecoResponseBody `json:"endereco,omitempty"`
+	Dentistas            []DentistaResponseBody `json:"dentistas,omitempty"`
 }

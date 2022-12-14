@@ -117,17 +117,21 @@ func (s *service) FindByMatricula(matricula string, ctx context.Context) (resp d
 }
 
 func (s *service) Update(id uint, dentistaDTO dtos.DentistaRequestBody, ctx context.Context) (resp dtos.DentistaResponseBody, err error) {
-	dentistaDTO.ID = id
+	log.Printf("\nservice - id: %v\n", id)
+
 	dentista, errConvert := dtoToEntity(dentistaDTO)
 	if errConvert != nil {
 		return resp, errConvert
 	}
 
-	log.Printf("\nupdate DTO: %v", dentistaDTO)
+	dentista.Model.ID = id
+
 	dentista, err = s.r.Update(dentista, ctx)
 	if err != nil {
 		return resp, err
 	}
+
+	log.Printf("\nupdate dentista: %v\n", dentista)
 
 	resp, errConvert = entityToDTO(dentista)
 	if errConvert != nil {
@@ -149,7 +153,6 @@ func (s *service) Delete(id uint, ctx context.Context) error {
 
 func dtoToEntity(dentistaDTO dtos.DentistaRequestBody) (dentista domain.Dentista, err error) {
 	var endereco domain.Endereco
-	var listClinicas []domain.Clinica
 
 	err = dto.Map(&dentista, dentistaDTO)
 	if err != nil {
@@ -160,17 +163,7 @@ func dtoToEntity(dentistaDTO dtos.DentistaRequestBody) (dentista domain.Dentista
 		return dentista, &errs.ErrInvalidMapping{Err: err}
 	}
 
-	for _, clinicaDTO := range dentistaDTO.Clinicas {
-		var clinica domain.Clinica
-		err = dto.Map(&clinica, clinicaDTO)
-		if err != nil {
-			return dentista, &errs.ErrInvalidMapping{Err: err}
-		}
-		listClinicas = append(listClinicas, clinica)
-	}
-
 	dentista.Endereco = endereco
-	dentista.Clinicas = listClinicas
 
 	return dentista, nil
 }
@@ -178,7 +171,6 @@ func dtoToEntity(dentistaDTO dtos.DentistaRequestBody) (dentista domain.Dentista
 func entityToDTO(dentista domain.Dentista) (resp dtos.DentistaResponseBody, err error) {
 	var enderecoResp dtos.EnderecoResponseBody
 	var consultas []dtos.ConsultaResponseBody
-	var clinicas []dtos.ClinicaResponseBody
 
 	err = dto.Map(&resp, dentista)
 	if err != nil {
@@ -198,18 +190,8 @@ func entityToDTO(dentista domain.Dentista) (resp dtos.DentistaResponseBody, err 
 		consultas = append(consultas, consultaDTO)
 	}
 
-	for _, clinica := range dentista.Clinicas {
-		var clinicaDTO dtos.ClinicaResponseBody
-		err = dto.Map(&clinicaDTO, clinica)
-		if err != nil {
-			return resp, &errs.ErrInvalidMapping{Err: err}
-		}
-		clinicas = append(clinicas, clinicaDTO)
-	}
-
 	resp.EnderecoResponseBody = enderecoResp
 	resp.Consultas = consultas
-	resp.Clinicas = clinicas
 
 	return resp, nil
 }
