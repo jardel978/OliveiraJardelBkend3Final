@@ -5,11 +5,20 @@ import (
 	"OliveiraJardelBkend3Final/internal/configs"
 )
 
+// @title CheckPoint - Backend 3 Final
+// @version 1.0
+// @description This API Handle Products.
+// @termsOfService
+
+// @contact.name Jardel e Nelson
+// @contact.url https://www.developersprofissa.com.ko/support
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {
 	configs.Load()
 	configs.StartGormDb()
 	server := server.NewServer()
-
+	server.InitSwag()
 	server.Run()
 }
 

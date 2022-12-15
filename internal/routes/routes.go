@@ -6,8 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//definindo rotas
-
 func ConfigRoutes(router *gin.Engine) *gin.Engine {
 	clinicaHandler := handlers.NewClinicaHandler()
 	pacienteHandler := handlers.NewPacienteHandler()
