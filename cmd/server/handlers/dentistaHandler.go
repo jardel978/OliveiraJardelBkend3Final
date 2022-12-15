@@ -132,6 +132,7 @@ func (dh *dentistaHandler) BuscarDentistaPorMatricula(ctx *gin.Context) {
 // AtualizarDentista - Atualiza Dentista godoc
 // @BasePath /api/v1
 // @Summary Put Dentist by ID
+// @Schemes
 // @Tags Dentistas
 // @Description put dentist by ID in DB
 // @Accept json

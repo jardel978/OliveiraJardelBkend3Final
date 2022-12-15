@@ -10,9 +10,9 @@ definitions:
     type: object
 info:
   contact:
-    name: Jardel e Nelson
-    url: https://www.developersprofissa.com.ko/support
-  description: This API Handle Products.
+    name: Jardel Oliveira e Nelson Kobayashi
+    url: https://www.developersprofissa.io/support
+  description: This API Handle a System of Dentist Clinic.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html

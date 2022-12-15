@@ -24,6 +24,7 @@ func NewClinicaHandler() *clinicaHandler {
 // SalvarClinica - Salva Clinica godoc
 // @BasePath /api/v1
 // @Summary Save Clinic
+// @Schemes
 // @Tags Clinica
 // @Description save clinic in DB
 // @Accept json

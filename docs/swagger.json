@@ -1,11 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This API Handle Products.",
+        "description": "This API Handle a System of Dentist Clinic.",
         "title": "CheckPoint - Backend 3 Final",
         "contact": {
-            "name": "Jardel e Nelson",
-            "url": "https://www.developersprofissa.com.ko/support"
+            "name": "Jardel Oliveira e Nelson Kobayashi",
+            "url": "https://www.developersprofissa.io/support"
         },
         "license": {
             "name": "Apache 2.0",

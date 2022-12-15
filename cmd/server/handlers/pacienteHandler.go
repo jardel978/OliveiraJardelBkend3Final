@@ -23,6 +23,7 @@ func NewPacienteHandler() *pacienteHandler {
 // SalvarPaciente - Salva Paciente godoc
 // @BasePath /api/v1
 // @Summary Post Patient
+// @Schemes
 // @Tags Pacientes
 // @Description post patients in DB
 // @Accept json

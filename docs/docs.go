@@ -11,8 +11,8 @@ const docTemplate = `{
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
         "contact": {
-            "name": "Jardel e Nelson",
-            "url": "https://www.developersprofissa.com.ko/support"
+            "name": "Jardel Oliveira e Nelson Kobayashi",
+            "url": "https://www.developersprofissa.io/support"
         },
         "license": {
             "name": "Apache 2.0",
@@ -1183,7 +1183,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "CheckPoint - Backend 3 Final",
-	Description:      "This API Handle Products.",
+	Description:      "This API Handle a System of Dentist Clinic.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

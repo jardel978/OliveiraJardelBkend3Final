@@ -23,6 +23,7 @@ func NewConsultaHandler() *consultaHandler {
 // SalvarConsulta - Salva Consulta godoc
 // @BasePath /api/v1
 // @Summary Save Scheduling
+// @Schemes
 // @Tags Consultas
 // @Description save scheduling in DB
 // @Accept json

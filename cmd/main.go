@@ -7,11 +7,12 @@ import (
 
 // @title CheckPoint - Backend 3 Final
 // @version 1.0
-// @description This API Handle Products.
+// @description This API Handle a System of Dentist Clinic.
+// @description.url https://github.com/jardel978/OliveiraJardelBkend3Final
 // @termsOfService
 
-// @contact.name Jardel e Nelson
-// @contact.url https://www.developersprofissa.com.ko/support
+// @contact.name Jardel Oliveira e Nelson Kobayashi
+// @contact.url https://www.developersprofissa.io/support
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {
