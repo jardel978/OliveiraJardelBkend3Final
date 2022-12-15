@@ -40,6 +40,17 @@ func NewConsultaService() CService {
 }
 
 func (s *service) Save(consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (resp dtos.ConsultaResponseBody, err error) {
+
+	if consultaDTO.DataConsulta != "" {
+		validDate, errDate := utils.DateIsValid(consultaDTO.DataConsulta, "before")
+		if errDate != nil {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("erro ao analizar data. %v", errDate.Error())}
+		}
+		if validDate {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("data inválida. Informe uma data posterior a %v", time.Now())}
+		}
+	}
+
 	consulta, errConvert := dtoToEntity(consultaDTO)
 	if errConvert != nil {
 		return resp, errConvert
@@ -61,6 +72,16 @@ func (s *service) Save(consultaDTO dtos.ConsultaRequestBody, ctx context.Context
 func (s *service) SaveWithPacienteRgDentistaMatricula(pacienteRg string, dentistaMatricula string, consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (resp dtos.ConsultaResponseBody, err error) {
 	var paciente domain.Paciente
 	var dentista domain.Dentista
+
+	if consultaDTO.DataConsulta != "" {
+		validDate, errDate := utils.DateIsValid(consultaDTO.DataConsulta, "before")
+		if errDate != nil {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("erro ao analizar data. %v", errDate.Error())}
+		}
+		if validDate {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("data inválida. Informe uma data posterior a %v", time.Now())}
+		}
+	}
 
 	paciente, err = s.pr.FindByRG(pacienteRg, ctx)
 	if err != nil {
@@ -171,7 +192,16 @@ func (s *service) FindAllByRgPaciente(pacienteRg string, ctx context.Context) (r
 }
 
 func (s *service) Update(id uint, consultaDTO dtos.ConsultaRequestBody, ctx context.Context) (resp dtos.ConsultaResponseBody, err error) {
-	log.Printf("\nservice - id: %v\n", id)
+
+	if consultaDTO.DataConsulta != "" {
+		validDate, errDate := utils.DateIsValid(consultaDTO.DataConsulta, "before")
+		if errDate != nil {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("erro ao analizar data. %v", errDate.Error())}
+		}
+		if validDate {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("data inválida. Informe uma data posterior a %v", time.Now())}
+		}
+	}
 
 	consulta, errConvert := dtoToEntity(consultaDTO)
 	if errConvert != nil {
@@ -209,12 +239,19 @@ func dtoToEntity(consultaDTO dtos.ConsultaRequestBody) (consulta domain.Consulta
 
 	mapper := dto.Mapper{}
 	mapper.AddConvFunc(func(DataConsulta string, mapper *dto.Mapper) time.Time {
-		date, err := utils.ParseDataTime(DataConsulta)
+		date, err := utils.ParseDate(DataConsulta)
 		if err != nil {
 			log.Println(err)
 		}
 		return date
 	})
+	if consultaDTO.DataConsulta != "" {
+		dateTime, errTime := utils.ParseDate(consultaDTO.DataConsulta)
+		if errTime != nil {
+			return consulta, errTime
+		}
+		consulta.DataConsulta = dateTime
+	}
 
 	err = mapper.Map(&consulta, consultaDTO)
 	if err != nil {

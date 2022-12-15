@@ -32,6 +32,17 @@ func NewPacienteService() PService {
 }
 
 func (s *service) Save(pacienteDTO dtos.PacienteRequestBody, ctx context.Context) (resp dtos.PacienteResponseBody, err error) {
+
+	if pacienteDTO.DataNascimento != "" {
+		invalidDate, errDate := utils.DateIsValid(pacienteDTO.DataNascimento, "after")
+		if errDate != nil {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("erro ao analizar data. %v", errDate.Error())}
+		}
+		if invalidDate {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("data inválida. Informe uma data anterior a %v (agora)", time.Now())}
+		}
+	}
+
 	paciente, errConvert := dtoToEntity(pacienteDTO)
 	if errConvert != nil {
 		log.Printf("\nerrConvert: %v\n", errConvert)
@@ -97,6 +108,17 @@ func (s *service) FindById(id uint, ctx context.Context) (resp dtos.PacienteResp
 }
 
 func (s *service) Update(id uint, pacienteDTO dtos.PacienteRequestBody, ctx context.Context) (resp dtos.PacienteResponseBody, err error) {
+
+	if pacienteDTO.DataNascimento != "" {
+		invalidDate, errDate := utils.DateIsValid(pacienteDTO.DataNascimento, "after")
+		if errDate != nil {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("erro ao analizar data. %v", errDate.Error())}
+		}
+		if invalidDate {
+			return resp, &errs.ErrInvaliDate{Message: fmt.Sprintf("data inválida. Informe uma data anterior a %v (agora)", time.Now())}
+		}
+	}
+
 	paciente, errConvert := dtoToEntity(pacienteDTO)
 	if errConvert != nil {
 		return resp, errConvert

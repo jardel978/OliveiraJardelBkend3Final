@@ -33,3 +33,11 @@ type ErrRequestBody struct {
 func (i *ErrRequestBody) Error() string {
 	return fmt.Sprintf("erro com a request. %v", i.Err.Error())
 }
+
+type ErrInvaliDate struct {
+	Message string
+}
+
+func (e *ErrInvaliDate) Error() string {
+	return e.Message
+}

@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"github.com/dranikpg/dto-mapper"
 	"gorm.io/gorm"
-	"log"
 )
 
 type DService interface {
@@ -40,8 +39,6 @@ func (s *service) Save(dentistaDTO dtos.DentistaRequestBody, ctx context.Context
 	if err != nil {
 		return resp, err
 	}
-
-	log.Printf("\nservice dentista: %v", dentista)
 
 	resp, errConvert = entityToDTO(dentista)
 	if errConvert != nil {
@@ -117,8 +114,6 @@ func (s *service) FindByMatricula(matricula string, ctx context.Context) (resp d
 }
 
 func (s *service) Update(id uint, dentistaDTO dtos.DentistaRequestBody, ctx context.Context) (resp dtos.DentistaResponseBody, err error) {
-	log.Printf("\nservice - id: %v\n", id)
-
 	dentista, errConvert := dtoToEntity(dentistaDTO)
 	if errConvert != nil {
 		return resp, errConvert
@@ -130,8 +125,6 @@ func (s *service) Update(id uint, dentistaDTO dtos.DentistaRequestBody, ctx cont
 	if err != nil {
 		return resp, err
 	}
-
-	log.Printf("\nupdate dentista: %v\n", dentista)
 
 	resp, errConvert = entityToDTO(dentista)
 	if errConvert != nil {

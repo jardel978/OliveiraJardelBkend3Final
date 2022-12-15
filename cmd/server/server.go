@@ -3,6 +3,7 @@ package server
 import (
 	"OliveiraJardelBkend3Final/internal/configs"
 	"OliveiraJardelBkend3Final/internal/routes"
+	"OliveiraJardelBkend3Final/pkg/middleware"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -22,8 +23,10 @@ func (s *Server) Run() {
 
 func NewServer() Server {
 	severPort := configs.GetServerPort()
-	return Server{
+	s := Server{
 		severPort,
 		gin.Default(),
 	}
+	s.server.Use(middleware.Logger())
+	return s
 }
