@@ -28,8 +28,8 @@ func NewConsultaHandler() *consultaHandler {
 // @Description save scheduling in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Consulta
+// @Param consulta body handlers.consultaHandler true "Consulta Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -58,8 +58,8 @@ func (ph *consultaHandler) SalvarConsulta(ctx *gin.Context) {
 // @Description save scheduling from enrollments in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Consulta
+// @Param consulta body handlers.consultaHandler true "Consulta Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -91,8 +91,8 @@ func (ph *consultaHandler) SalvarConsultaComPacienteRgDentistaMatricula(ctx *gin
 // @Description get all schedulings in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Consulta
+// @Param id path int64 true "Consultas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -113,8 +113,8 @@ func (ph *consultaHandler) BuscarConsultas(ctx *gin.Context) {
 // @Description get scheduling by id in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Consulta
+// @Param id path int64 true "Consultas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -144,8 +144,8 @@ func (ph *consultaHandler) BuscarConsultaPorId(ctx *gin.Context) {
 // @Description get scheduling by patient enrollment in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Consulta
+// @Param rg path string true "Consultas RG"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -168,8 +168,8 @@ func (ph *consultaHandler) BuscarConsultaPorPacienteRG(ctx *gin.Context) {
 // @Description get scheduling by ID in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Consulta
+// @Param consulta body handlers.consultaHandler true "Consulta Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -207,8 +207,8 @@ func (ph *consultaHandler) AtualizarConsulta(ctx *gin.Context) {
 // @Description delete scheduling by ID in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Consulta
+// @Param id path int64 true "Consultas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse

@@ -21,6 +21,9 @@ func NewDentistaHandler() *dentistaHandler {
 	}
 }
 
+// @Param id path int64 true "Dentistas ID"
+// @Param dentista body handlers.dentistaHandler true "Dentista Data"
+
 // SalvarDentista - Salva Dentista godoc
 // @BasePath /api/v1
 // @Summary Save Dentist
@@ -28,9 +31,8 @@ func NewDentistaHandler() *dentistaHandler {
 // @Description save dentist in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Dentista
-// @Failure 400 {object} web.errorResponse
+// @Param dentista body handlers.dentistaHandler true "Dentista Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
 // @Router /dentistas [post]
@@ -59,9 +61,8 @@ func (dh *dentistaHandler) SalvarDentista(ctx *gin.Context) {
 // @Description get all dentists in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Dentista
-// @Failure 400 {object} web.errorResponse
+// @Param id path int64 true "Dentistas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
 // @Router /dentistas [get]
@@ -81,9 +82,8 @@ func (dh *dentistaHandler) BuscarDentistas(ctx *gin.Context) {
 // @Description get dentist by id in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Dentista
-// @Failure 400 {object} web.errorResponse
+// @Param id path int64 true "Dentistas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
 // @Router /dentistas/:i [get]
@@ -112,9 +112,8 @@ func (dh *dentistaHandler) BuscarDentistaPorId(ctx *gin.Context) {
 // @Description get dentist by enrollment in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Dentista
-// @Failure 400 {object} web.errorResponse
+// @Param matricula path int64 true "Dentistas enrollment"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
 // @Router /dentistas/matriculas/:matricula [get]
@@ -137,8 +136,8 @@ func (dh *dentistaHandler) BuscarDentistaPorMatricula(ctx *gin.Context) {
 // @Description put dentist by ID in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Dentista
+// @Param dentista body handlers.dentistaHandler true "Dentista Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -176,9 +175,8 @@ func (dh *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
 // @Description deleta dentist in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Dentista
-// @Failure 400 {object} web.errorResponse
+// @Param id path int64 true "Dentistas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
 // @Router /dentistas/:id [delete]

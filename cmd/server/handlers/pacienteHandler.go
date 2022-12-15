@@ -28,8 +28,8 @@ func NewPacienteHandler() *pacienteHandler {
 // @Description post patients in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Paciente
+// @Param dentista body handlers.dentistaHandler true "Dentista Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -58,8 +58,8 @@ func (ph *pacienteHandler) SalvarPaciente(ctx *gin.Context) {
 // @Description get all patients in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Paciente
+// @Param id path int64 true "Pacientes ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -80,8 +80,8 @@ func (ph *pacienteHandler) BuscarPacientes(ctx *gin.Context) {
 // @Description get dentist by ID in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Paciente
+// @Param id path int64 true "Pacientes ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -111,8 +111,8 @@ func (ph *pacienteHandler) BuscarPacientePorId(ctx *gin.Context) {
 // @Description put patients by ID in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Paciente
+// @Param dentista body handlers.dentistaHandler true "Dentista Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -150,8 +150,8 @@ func (ph *pacienteHandler) AtualizarPaciente(ctx *gin.Context) {
 // @Description delete patients by ID in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Paciente
+// @Param id path int64 true "Pacientes ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse

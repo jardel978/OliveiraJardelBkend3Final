@@ -38,11 +38,13 @@ const docTemplate = `{
                 "summary": "Update Clinic",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Clinicas Data",
+                        "name": "clinica",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.clinicaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -88,10 +90,10 @@ const docTemplate = `{
                 "summary": "List All Clinics",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Clinicas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -136,11 +138,13 @@ const docTemplate = `{
                 "summary": "Save Clinic",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Clinicas Data",
+                        "name": "clinica",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.clinicaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -186,10 +190,10 @@ const docTemplate = `{
                 "summary": "List Clinic by id",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Clinicas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -234,10 +238,10 @@ const docTemplate = `{
                 "summary": "Delete Clinic",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Clinicas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -284,11 +288,13 @@ const docTemplate = `{
                 "summary": "Save Scheduling",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Consulta Data",
+                        "name": "consulta",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.consultaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -334,11 +340,13 @@ const docTemplate = `{
                 "summary": "Save Scheduling from enrollments",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Consulta Data",
+                        "name": "consulta",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.consultaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -384,10 +392,10 @@ const docTemplate = `{
                 "summary": "Get All Schedulings",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Consultas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -434,10 +442,10 @@ const docTemplate = `{
                 "summary": "Get Scheduling by ID",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Consultas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -482,11 +490,13 @@ const docTemplate = `{
                 "summary": "Put Scheduling by ID",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Consulta Data",
+                        "name": "consulta",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.consultaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -530,10 +540,10 @@ const docTemplate = `{
                 "summary": "Delete Scheduling by ID",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Consultas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -581,9 +591,9 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "description": "Consultas RG",
+                        "name": "rg",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -630,10 +640,10 @@ const docTemplate = `{
                 "summary": "Get All Dentists",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Dentistas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -642,12 +652,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "objet"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/web.errorResponse"
                         }
                     },
                     "404": {
@@ -678,11 +682,13 @@ const docTemplate = `{
                 "summary": "Save Dentist",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Dentista Data",
+                        "name": "dentista",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.dentistaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -690,12 +696,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "objet"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/web.errorResponse"
                         }
                     },
                     "404": {
@@ -728,10 +728,10 @@ const docTemplate = `{
                 "summary": "get Dentist by ID",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Dentistas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -740,12 +740,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "objet"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/web.errorResponse"
                         }
                     },
                     "404": {
@@ -778,11 +772,13 @@ const docTemplate = `{
                 "summary": "Put Dentist by ID",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Dentista Data",
+                        "name": "dentista",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.dentistaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -826,10 +822,10 @@ const docTemplate = `{
                 "summary": "Deleta Dentist",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Dentistas ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -838,12 +834,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "objet"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/web.errorResponse"
                         }
                     },
                     "404": {
@@ -876,10 +866,10 @@ const docTemplate = `{
                 "summary": "Get Dentist by Enrollment",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Dentistas enrollment",
+                        "name": "matricula",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -888,12 +878,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "objet"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/web.errorResponse"
                         }
                     },
                     "404": {
@@ -926,10 +910,10 @@ const docTemplate = `{
                 "summary": "Get All Patients",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Pacientes ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -974,11 +958,13 @@ const docTemplate = `{
                 "summary": "Put Patient by ID",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Dentista Data",
+                        "name": "dentista",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.dentistaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -1024,11 +1010,13 @@ const docTemplate = `{
                 "summary": "Post Patient",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
+                        "description": "Dentista Data",
+                        "name": "dentista",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.dentistaHandler"
+                        }
                     }
                 ],
                 "responses": {
@@ -1074,10 +1062,10 @@ const docTemplate = `{
                 "summary": "Get Dentist by ID",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Pacientes ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -1122,10 +1110,10 @@ const docTemplate = `{
                 "summary": "Deleta Patient by ID",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
+                        "type": "integer",
+                        "description": "Pacientes ID",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -1159,6 +1147,15 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "handlers.clinicaHandler": {
+            "type": "object"
+        },
+        "handlers.consultaHandler": {
+            "type": "object"
+        },
+        "handlers.dentistaHandler": {
+            "type": "object"
+        },
         "web.errorResponse": {
             "type": "object",
             "properties": {

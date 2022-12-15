@@ -29,8 +29,8 @@ func NewClinicaHandler() *clinicaHandler {
 // @Description save clinic in DB
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Clinica
+// @Param clinica body handlers.clinicaHandler true "Clinicas Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -59,8 +59,8 @@ func (c *clinicaHandler) SalvarClinica(ctx *gin.Context) {
 // @Description get all clinicas
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Clinica
+// @Param id path int64 true "Clinicas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -81,8 +81,8 @@ func (c *clinicaHandler) BuscarClinicas(ctx *gin.Context) {
 // @Description get clinics by id from db.
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Clinica
+// @Param id path int64 true "Clinicas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -112,8 +112,8 @@ func (c *clinicaHandler) BuscarClinicaPorId(ctx *gin.Context) {
 // @Description update clinic by ID
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Clinica
+// @Param clinica body handlers.clinicaHandler true "Clinicas Data"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
@@ -151,8 +151,8 @@ func (c *clinicaHandler) AtualizarClinica(ctx *gin.Context) {
 // @Description delete clinic by ID
 // @Accept json
 // @Produce json
-// @Param token header string true "token"
-// @Success 200 {objet} domain.Clinica
+// @Param id path int64 true "Clinicas ID"
+// @Success 200 {objet} map[string]interface{}
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
