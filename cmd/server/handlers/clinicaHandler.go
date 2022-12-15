@@ -21,6 +21,19 @@ func NewClinicaHandler() *clinicaHandler {
 	}
 }
 
+// SalvarClinica - Salva Clinica godoc
+// @BasePath /api/v1
+// @Summary Save Clinic
+// @Tags Clinica
+// @Description save clinic in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Clinica
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /clinicas [post]
 func (c *clinicaHandler) SalvarClinica(ctx *gin.Context) {
 	var dto dtos.ClinicaRequestBody
 	errDtoJSON := ctx.ShouldBindJSON(&dto)
@@ -38,6 +51,19 @@ func (c *clinicaHandler) SalvarClinica(ctx *gin.Context) {
 	web.Success(ctx, 201, resp)
 }
 
+// BuscarClinicas - Buscar todas as Clinicas godoc
+// @BasePath /api/v1
+// @Summary List All Clinics
+// @Tags Clinica
+// @Description get all clinicas
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Clinica
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /clinicas [get]
 func (c *clinicaHandler) BuscarClinicas(ctx *gin.Context) {
 	data, err := c.s.FindAll(ctx)
 	if err != nil {
@@ -47,6 +73,19 @@ func (c *clinicaHandler) BuscarClinicas(ctx *gin.Context) {
 	web.Success(ctx, 200, data)
 }
 
+// BuscarClinicaPorId - Buscar Clinica por ID  godoc
+// @BasePath /api/v1
+// @Summary List Clinic by id
+// @Tags Clinica
+// @Description get clinics by id from db.
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Clinica
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /clinicas/:id [get]
 func (c *clinicaHandler) BuscarClinicaPorId(ctx *gin.Context) {
 	id := ctx.Param("id")
 
@@ -65,6 +104,19 @@ func (c *clinicaHandler) BuscarClinicaPorId(ctx *gin.Context) {
 	web.Success(ctx, 200, dto)
 }
 
+// AtualizarClinica - Atualizar Clinica por ID godoc
+// @BasePath /api/v1
+// @Summary Update Clinic
+// @Tags Clinica
+// @Description update clinic by ID
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Clinica
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /clinica/:id [put]
 func (c *clinicaHandler) AtualizarClinica(ctx *gin.Context) {
 	var dto dtos.ClinicaRequestBody
 	id := ctx.Param("id")
@@ -91,6 +143,19 @@ func (c *clinicaHandler) AtualizarClinica(ctx *gin.Context) {
 	web.Success(ctx, 200, resp)
 }
 
+// DeletarClinica - deletar Clinica por ID godoc
+// @BasePath /api/v1
+// @Summary Delete Clinic
+// @Tags Clinica
+// @Description delete clinic by ID
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Clinica
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /clinicas/:id [delete]
 func (c *clinicaHandler) DeletarClinica(ctx *gin.Context) {
 	id := ctx.Param("id")
 	idNum, err := strconv.Atoi(id)

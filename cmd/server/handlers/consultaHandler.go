@@ -20,6 +20,19 @@ func NewConsultaHandler() *consultaHandler {
 	}
 }
 
+// SalvarConsulta - Salva Consulta godoc
+// @BasePath /api/v1
+// @Summary Save Scheduling
+// @Tags Consultas
+// @Description save scheduling in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Consulta
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /consulta [post]
 func (ph *consultaHandler) SalvarConsulta(ctx *gin.Context) {
 	var dto dtos.ConsultaRequestBody
 	errDtoJSON := ctx.ShouldBindJSON(&dto)
@@ -37,6 +50,19 @@ func (ph *consultaHandler) SalvarConsulta(ctx *gin.Context) {
 	web.Success(ctx, 201, resp)
 }
 
+// SalvarConsultaComPacienteRgDentistaMatricula - Salva Consulta pelo RG do Paciente e Matricula do Dentista godoc
+// @BasePath /api/v1
+// @Summary Save Scheduling from enrollments
+// @Tags Consultas
+// @Description save scheduling from enrollments in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Consulta
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /consulta/salvar [post]
 func (ph *consultaHandler) SalvarConsultaComPacienteRgDentistaMatricula(ctx *gin.Context) {
 	var dto dtos.ConsultaRequestBody
 	errDtoJSON := ctx.ShouldBindJSON(&dto)
@@ -57,6 +83,19 @@ func (ph *consultaHandler) SalvarConsultaComPacienteRgDentistaMatricula(ctx *gin
 	web.Success(ctx, 201, resp)
 }
 
+// BuscarConsultas - Busca Todas as Consultas godoc
+// @BasePath /api/v1
+// @Summary Get All Schedulings
+// @Tags Consultas
+// @Description get all schedulings in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Consulta
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /consultas [get]
 func (ph *consultaHandler) BuscarConsultas(ctx *gin.Context) {
 	data, err := ph.s.FindAll(ctx)
 	if err != nil {
@@ -66,6 +105,19 @@ func (ph *consultaHandler) BuscarConsultas(ctx *gin.Context) {
 	web.Success(ctx, 200, data)
 }
 
+// BuscarConsultaPorId - Busca Consulta por ID godoc
+// @BasePath /api/v1
+// @Summary Get Scheduling by ID
+// @Tags Consultas
+// @Description get scheduling by id in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Consulta
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /consultas/:id [get]
 func (ph *consultaHandler) BuscarConsultaPorId(ctx *gin.Context) {
 	id := ctx.Param("id")
 
@@ -84,6 +136,19 @@ func (ph *consultaHandler) BuscarConsultaPorId(ctx *gin.Context) {
 	web.Success(ctx, 200, dto)
 }
 
+// BuscarConsultaPorPacienteRG - Busca Consulta por RG do paciente  godoc
+// @BasePath /api/v1
+// @Summary Get Scheduling by Patient Enrollment
+// @Tags Consultas
+// @Description get scheduling by patient enrollment in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Consulta
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /consultas/pacientes/:rg [get]
 func (ph *consultaHandler) BuscarConsultaPorPacienteRG(ctx *gin.Context) {
 	pacienteRG := ctx.Param("rg")
 
@@ -95,6 +160,19 @@ func (ph *consultaHandler) BuscarConsultaPorPacienteRG(ctx *gin.Context) {
 	web.Success(ctx, 200, dto)
 }
 
+// AtualizarConsulta - Atualizar Consulta por ID godoc
+// @BasePath /api/v1
+// @Summary Put Scheduling by ID
+// @Tags Consultas
+// @Description get scheduling by ID in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Consulta
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /consultas/:id [put]
 func (ph *consultaHandler) AtualizarConsulta(ctx *gin.Context) {
 	var dto dtos.ConsultaRequestBody
 	id := ctx.Param("id")
@@ -121,6 +199,19 @@ func (ph *consultaHandler) AtualizarConsulta(ctx *gin.Context) {
 	web.Success(ctx, 200, resp)
 }
 
+// DeletarConsulta - Deletar Consulta por ID godoc
+// @BasePath /api/v1
+// @Summary Delete Scheduling by ID
+// @Tags Consultas
+// @Description delete scheduling by ID in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Consulta
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /consultas/:id [delete]
 func (ph *consultaHandler) DeletarConsulta(ctx *gin.Context) {
 	id := ctx.Param("id")
 	idNum, err := strconv.Atoi(id)

@@ -21,6 +21,19 @@ func NewDentistaHandler() *dentistaHandler {
 	}
 }
 
+// SalvarDentista - Salva Dentista godoc
+// @BasePath /api/v1
+// @Summary Save Dentist
+// @Tags Dentistas
+// @Description save dentist in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Dentista
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /dentistas [post]
 func (dh *dentistaHandler) SalvarDentista(ctx *gin.Context) {
 	var dto dtos.DentistaRequestBody
 	errDtoJSON := ctx.ShouldBindJSON(&dto)
@@ -39,6 +52,19 @@ func (dh *dentistaHandler) SalvarDentista(ctx *gin.Context) {
 	web.Success(ctx, 201, resp)
 }
 
+// BuscarDentistas - Busca Dentistas godoc
+// @BasePath /api/v1
+// @Summary Get All Dentists
+// @Tags Dentistas
+// @Description get all dentists in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Dentista
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /dentistas [get]
 func (dh *dentistaHandler) BuscarDentistas(ctx *gin.Context) {
 	data, err := dh.s.FindAll(ctx)
 	if err != nil {
@@ -48,6 +74,19 @@ func (dh *dentistaHandler) BuscarDentistas(ctx *gin.Context) {
 	web.Success(ctx, 200, data)
 }
 
+// BuscarDentistaPorId - Busca um Dentista por ID godoc
+// @BasePath /api/v1
+// @Summary get Dentist by ID
+// @Tags Dentistas
+// @Description get dentist by id in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Dentista
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /dentistas [post]
 func (dh *dentistaHandler) BuscarDentistaPorId(ctx *gin.Context) {
 	id := ctx.Param("id")
 
@@ -66,6 +105,19 @@ func (dh *dentistaHandler) BuscarDentistaPorId(ctx *gin.Context) {
 	web.Success(ctx, 200, dto)
 }
 
+// BuscarDentistaPorMatricula - Busca Dentista por Matricula godoc
+// @BasePath /api/v1
+// @Summary Get Dentist by Enrollment
+// @Tags Dentistas
+// @Description get dentist by enrollment in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Dentista
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /dentistas/matriculas/:matricula [get]
 func (dh *dentistaHandler) BuscarDentistaPorMatricula(ctx *gin.Context) {
 	matricula := ctx.Param("matricula")
 
@@ -77,6 +129,19 @@ func (dh *dentistaHandler) BuscarDentistaPorMatricula(ctx *gin.Context) {
 	web.Success(ctx, 200, dto)
 }
 
+// AtualizarDentista - Atualiza Dentista godoc
+// @BasePath /api/v1
+// @Summary Put Dentist by ID
+// @Tags Dentistas
+// @Description put dentist by ID in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Dentista
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /dentistas/:id [put]
 func (dh *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
 	var dto dtos.DentistaRequestBody
 	id := ctx.Param("id")
@@ -103,6 +168,19 @@ func (dh *dentistaHandler) AtualizarDentista(ctx *gin.Context) {
 	web.Success(ctx, 200, resp)
 }
 
+// DeletarDentista - Deleta Dentista godoc
+// @BasePath /api/v1
+// @Summary Deleta Dentist
+// @Tags Dentistas
+// @Description deleta dentist in DB
+// @Accept json
+// @Produce json
+// @Param token header string true "token"
+// @Success 200 {objet} domain.Dentista
+// @Failure 400 {object} web.errorResponse
+// @Failure 404 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /dentistas/:id [delete]
 func (dh *dentistaHandler) DeletarDentista(ctx *gin.Context) {
 	id := ctx.Param("id")
 	idNum, err := strconv.Atoi(id)
