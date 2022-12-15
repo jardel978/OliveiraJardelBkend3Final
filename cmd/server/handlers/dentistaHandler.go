@@ -86,7 +86,7 @@ func (dh *dentistaHandler) BuscarDentistas(ctx *gin.Context) {
 // @Failure 400 {object} web.errorResponse
 // @Failure 404 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /dentistas [post]
+// @Router /dentistas/:i [get]
 func (dh *dentistaHandler) BuscarDentistaPorId(ctx *gin.Context) {
 	id := ctx.Param("id")
 

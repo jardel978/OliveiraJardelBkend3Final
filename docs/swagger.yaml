@@ -447,6 +447,39 @@ paths:
     post:
       consumes:
       - application/json
+      description: save dentist in DB
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: objet
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/web.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/web.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/web.errorResponse'
+      summary: Save Dentist
+      tags:
+      - Dentistas
+  /dentistas/:i:
+    get:
+      consumes:
+      - application/json
       description: get dentist by id in DB
       parameters:
       - description: token
